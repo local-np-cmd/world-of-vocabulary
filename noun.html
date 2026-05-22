@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Noun Master | English ↔ Nepali | 9 Types of Nouns </title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1f6d7a 0%, #0e4b57 100%);
+            font-family: 'Comic Neue', 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI Emoji', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-container {
+            max-width: 1400px;
+            width: 100%;
+            background: #fffaf0;
+            border-radius: 4rem 4rem 3rem 3rem;
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.8);
+            padding: 1.2rem 1.5rem 2rem;
+            position: relative;
+        }
+
+        .home-btn-top {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.2rem;
+            background: #ff8c5a;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 8px 18px;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: transform 0.08s linear, background 0.2s;
+            color: white;
+            box-shadow: 0 4px 0 #c25a2a;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 20;
+            text-decoration: none;
+        }
+
+        .home-btn-top:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #c25a2a;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin: 0.5rem 0 0.25rem;
+            background: linear-gradient(120deg, #3a7ca5, #1d5a7a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            font-weight: 800;
+            padding-top: 0.5rem;
+        }
+
+        .subhead {
+            text-align: center;
+            font-weight: bold;
+            background: #fff0cf;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 1rem;
+            padding: 0.4rem 1.5rem;
+            border-radius: 3rem;
+            font-size: 0.9rem;
+            color: #d66b2d;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #f7e9cf;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4rem;
+            margin-bottom: 1.8rem;
+            gap: 12px;
+            margin-top: 0.5rem;
+        }
+
+        .score-panel {
+            background: #2e5c4a;
+            padding: 0.3rem 1rem;
+            border-radius: 3rem;
+            color: #f9eec1;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: inset 0 -1px 0 #3d7860, 0 4px 0 #1f3e32;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .score-item {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: #f7b32b;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding: 8px 18px;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: transform 0.08s linear;
+            color: #2d2b1f;
+            box-shadow: 0 4px 0 #a45d2a;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #a45d2a;
+        }
+
+        .reset-btn {
+            background: #6c9ebf;
+            color: white;
+            box-shadow: 0 4px 0 #3e607a;
+        }
+
+        .page-btn {
+            background: #56ab7c;
+            color: white;
+            box-shadow: 0 4px 0 #2e6b49;
+        }
+
+        .noun-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff5e6;
+            padding: 0.2rem 1rem;
+            border-radius: 3rem;
+            flex-wrap: wrap;
+            flex-shrink: 1;
+            min-width: 0;
+        }
+
+        .noun-selector label {
+            font-weight: bold;
+            color: #b45f2b;
+            white-space: nowrap;
+        }
+
+        select {
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+            border: none;
+            background: #ffefcd;
+            cursor: pointer;
+            outline: none;
+            max-width: 100%;
+            text-overflow: ellipsis;
+        }
+
+        .message-box {
+            background: #fff0d4;
+            border-radius: 2.5rem;
+            padding: 0.4rem 1rem;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-align: center;
+            color: #bf5e1a;
+            flex-shrink: 1;
+            min-width: 150px;
+        }
+
+        .match-zone {
+            position: relative;
+            display: flex;
+            gap: 2rem;
+            background: #fffbe6;
+            border-radius: 3rem;
+            padding: 2rem 1rem;
+            margin-top: 0.5rem;
+            box-shadow: inset 0 0 0 3px white, 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .column h3 {
+            text-align: center;
+            font-size: 1.6rem;
+            margin: 0 0 0.2rem;
+            color: #e58734;
+            background: #ffefcd;
+            width: fit-content;
+            padding: 0.2rem 1.2rem;
+            border-radius: 3rem;
+            align-self: center;
+        }
+
+        .word-card {
+            background: white;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 4rem;
+            cursor: pointer;
+            transition: all 0.12s;
+            box-shadow: 0 8px 0 #c0a16b;
+            border: 2px solid #ffd995;
+            position: relative;
+            min-height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 0.5rem;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        .eng-card {
+            background: #d9effa;
+            color: #004b6e;
+            border-left: 10px solid #3a86ff;
+        }
+
+        .nep-card {
+            background: #fff0cf;
+            color: #8b5a2b;
+            border-right: 10px solid #f5b85b;
+            font-size: 1.2rem;
+        }
+
+        .word-card.selected {
+            background: #fff0a3;
+            transform: scale(0.97);
+            box-shadow: 0 4px 0 #b87c2e;
+        }
+
+        .word-card.matched {
+            background: #a7d0a7;
+            opacity: 0.9;
+            cursor: default;
+            box-shadow: 0 4px 0 #5b784e;
+            pointer-events: none;
+        }
+
+        .word-card.matched::after {
+            content: " ✓";
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #1b6b1b;
+            display: inline-block;
+            margin-left: 6px;
+        }
+
+        .line-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .match-line {
+            stroke: #289b48;
+            stroke-width: 5;
+            stroke-linecap: round;
+            filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 1.2rem;
+            font-weight: bold;
+            color: #966f3a;
+            background: #fff2df;
+            width: fit-content;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 720px) {
+            .game-container { padding: 1rem; }
+            .home-btn-top {
+                position: relative;
+                top: auto;
+                left: auto;
+                display: inline-flex;
+                margin: 0 0 0.8rem 0;
+                width: fit-content;
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+            .home-wrapper {
+                display: flex;
+                justify-content: flex-start;
+                margin-bottom: 0.5rem;
+            }
+            h1 { font-size: 1.5rem; margin-top: 0.2rem; padding-top: 0; }
+            .word-card { font-size: 1rem; min-height: 70px; padding: 0.5rem 0.2rem; }
+            .nep-card { font-size: 0.9rem; }
+            .column h3 { font-size: 1.2rem; }
+            button { padding: 5px 12px; font-size: 0.7rem; }
+            .match-zone { gap: 1rem; }
+            .column { gap: 1rem; }
+            .word-card.matched::after { font-size: 1rem; }
+            .score-panel { font-size: 0.9rem; }
+            .top-bar { flex-direction: column; align-items: stretch; margin-top: 0; }
+            .noun-selector { justify-content: space-between; }
+            .nav-buttons { justify-content: center; }
+            .message-box { text-align: center; }
+            select { font-size: 0.8rem; padding: 0.2rem 0.5rem; }
+        }
+
+        @media (min-width: 721px) {
+            .home-wrapper {
+                display: block;
+                position: relative;
+            }
+            .home-btn-top {
+                position: absolute;
+                top: 1.2rem;
+                left: 1.2rem;
+            }
+            h1 {
+                margin-top: 0.5rem;
+                padding-top: 0.5rem;
+            }
+        }
+
+        .wrong-flash {
+            animation: shakeFlash 0.3s ease;
+        }
+        @keyframes shakeFlash {
+            0% { background-color: #ffc2c2; transform: translateX(0);}
+            30% { transform: translateX(-4px);}
+            70% { transform: translateX(4px);}
+            100% { background-color: inherit; transform: translateX(0);}
+        }
+    </style>
+</head>
+<body>
+<div class="game-container" id="gameApp">
+    <div class="home-wrapper">
+        <button id="homeBtnTop" class="home-btn-top">🏠 HOME</button>
+    </div>
+
+    <h1>📚 NOUN MASTER</h1>
+    <div style="text-align: center;"><span class="subhead">🎧 9 noun types • 50+ words each • Match English ↔ Nepali 🎧</span></div>
+
+    <div class="top-bar">
+        <div class="score-panel">
+            <div class="score-item">🏆 PAGE: <span id="matchCount">0</span> / <span id="totalCount">5</span></div>
+            <div class="score-item">🌟 TOTAL: <span id="totalScoreSpan">0</span></div>
+        </div>
+        <div class="noun-selector">
+            <label>📚 NOUN TYPE:</label>
+            <select id="nounTypeSelect">
+                <option value="0">🏷️ Proper Noun (व्यक्तिवाचक)</option>
+                <option value="1">📦 Common Noun (जातिवाचक)</option>
+                <option value="2">👥 Collective Noun (समूहवाचक)</option>
+                <option value="3">💭 Abstract Noun (भाववाचक)</option>
+                <option value="4">🪨 Concrete Noun (ठोस वाचक)</option>
+                <option value="5">🧱 Material Noun (द्रव्यवाचक)</option>
+                <option value="6">🔢 Countable Noun (गणनीय)</option>
+                <option value="7">💧 Uncountable Noun (अगणनीय)</option>
+                <option value="8">🔗 Compound Noun (यौगिक)</option>
+            </select>
+        </div>
+        <div class="nav-buttons">
+            <button id="prevPageBtn" class="page-btn">◀ PREV</button>
+            <button id="resetBtn" class="reset-btn">🔄 RESET PAGE</button>
+            <button id="nextPageBtn" class="page-btn">NEXT ▶</button>
+        </div>
+        <div class="message-box" id="statusMsg">✨ Pick a noun type, then match!</div>
+    </div>
+
+    <div id="matchArea" class="match-zone">
+        <div class="column">
+            <h3>🇬🇧 ENGLISH</h3>
+            <div id="englishList" class="verb-list"></div>
+        </div>
+        <div class="column">
+            <h3>🇳🇵 NEPALI</h3>
+            <div id="nepaliList" class="verb-list"></div>
+        </div>
+        <div id="lineLayer" class="line-overlay"></div>
+    </div>
+    <div class="footer-note">
+        💡 Click any word → speaks aloud. Match correct pairs. ✅ Check mark + green line = correct! Total score never resets.
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // EXPANDED NOUN DATA: 9 TYPES, each with 50 examples (10 pages of 5)
+    // --------------------------------------------------------------
+
+    // Helper to generate arrays of 50 items (mixing existing + new)
+    function extendList(original, newItems) {
+        return [...original, ...newItems];
+    }
+
+    // 0. Proper Noun (50 items)
+    const properBase = [
+        { eng: "Ram", nep: "राम" }, { eng: "Sita", nep: "सीता" }, { eng: "Kathmandu", nep: "काठमाडौं" },
+        { eng: "Nepal", nep: "नेपाल" }, { eng: "Everest", nep: "एभरेस्ट" }, { eng: "Ganga", nep: "गंगा" },
+        { eng: "Buddha", nep: "बुद्ध" }, { eng: "Himalaya", nep: "हिमालय" }, { eng: "Lumbini", nep: "लुम्बिनी" },
+        { eng: "Patan", nep: "पाटन" }
+    ];
+    const properExtra = [
+        { eng: "Bhaktapur", nep: "भक्तपुर" }, { eng: "Pokhara", nep: "पोखरा" }, { eng: "Janakpur", nep: "जनकपुर" },
+        { eng: "Birgunj", nep: "विरगन्ज" }, { eng: "Biratnagar", nep: "विराटनगर" }, { eng: "Dharan", nep: "धरान" },
+        { eng: "Hetauda", nep: "हेटौडा" }, { eng: "Butwal", nep: "बुटवल" }, { eng: "Nepalgunj", nep: "नेपालगन्ज" },
+        { eng: "Tansen", nep: "तानसेन" }, { eng: "Gorkha", nep: "गोरखा" }, { eng: "Ilam", nep: "इलाम" },
+        { eng: "Mustang", nep: "मुस्ताङ" }, { eng: "Manang", nep: "मनाङ" }, { eng: "Solukhumbu", nep: "सोलुखुम्बु" },
+        { eng: "Rasuwa", nep: "रसुवा" }, { eng: "Makalu", nep: "मकालु" }, { eng: "Annapurna", nep: "अन्नपूर्ण" },
+        { eng: "Dhaulagiri", nep: "धौलागिरी" }, { eng: "Kanchenjunga", nep: "कञ्चनजङ्घा" }, { eng: "Lhotse", nep: "ल्होत्से" },
+        { eng: "Cho Oyu", nep: "चो ओयु" }, { eng: "Mahakali", nep: "महाकाली" }, { eng: "Karnali", nep: "कर्णाली" },
+        { eng: "Koshi", nep: "कोशी" }, { eng: "Gandaki", nep: "गण्डकी" }, { eng: "Rapti", nep: "राप्ती" },
+        { eng: "Bheri", nep: "भेरी" }, { eng: "Seti", nep: "सेती" }, { eng: "Bagmati", nep: "बागमती" },
+        { eng: "Narayani", nep: "नारायणी" }, { eng: "Janakpur", nep: "जनकपुर" }, { eng: "Kapilvastu", nep: "कपिलवस्तु" },
+        { eng: "Lumbini Zone", nep: "लुम्बिनी अञ्चल" }, { eng: "Sagarmatha", nep: "सगरमाथा" }, { eng: "Mechi", nep: "मेची" },
+        { eng: "Kosi", nep: "कोसी" }, { eng: "Marsyangdi", nep: "मर्स्याङ्दी" }, { eng: "Trishuli", nep: "त्रिशूली" },
+        { eng: "Kali Gandaki", nep: "कालीगण्डकी" }
+    ];
+    const properList = [...properBase, ...properExtra].slice(0, 50);
+
+    // 1. Common Noun (50 items)
+    const commonBase = [
+        { eng: "boy", nep: "केटा" }, { eng: "city", nep: "सहर" }, { eng: "country", nep: "देश" },
+        { eng: "mountain", nep: "पहाड" }, { eng: "river", nep: "नदी" }, { eng: "teacher", nep: "शिक्षक" },
+        { eng: "student", nep: "विद्यार्थी" }, { eng: "book", nep: "पुस्तक" }, { eng: "animal", nep: "जनावर" },
+        { eng: "bird", nep: "चरा" }
+    ];
+    const commonExtra = [
+        { eng: "tree", nep: "रुख" }, { eng: "flower", nep: "फूल" }, { eng: "fruit", nep: "फल" },
+        { eng: "vegetable", nep: "तरकारी" }, { eng: "car", nep: "गाडी" }, { eng: "house", nep: "घर" },
+        { eng: "school", nep: "विद्यालय" }, { eng: "hospital", nep: "अस्पताल" }, { eng: "market", nep: "बजार" },
+        { eng: "temple", nep: "मन्दिर" }, { eng: "river", nep: "नदी" }, { eng: "lake", nep: "ताल" },
+        { eng: "forest", nep: "जंगल" }, { eng: "ocean", nep: "सागर" }, { eng: "desert", nep: "मरुभूमि" },
+        { eng: "mountain", nep: "पहाड" }, { eng: "hill", nep: "डाँडा" }, { eng: "valley", nep: "उपत्यका" },
+        { eng: "plane", nep: "विमान" }, { eng: "train", nep: "रेल" }, { eng: "bus", nep: "बस" },
+        { eng: "bicycle", nep: "साइकल" }, { eng: "computer", nep: "कम्प्युटर" }, { eng: "phone", nep: "फोन" },
+        { eng: "table", nep: "टेबल" }, { eng: "chair", nep: "कुर्सी" }, { eng: "bed", nep: "ओछ्यान" },
+        { eng: "window", nep: "झ्याल" }, { eng: "door", nep: "ढोका" }, { eng: "road", nep: "सडक" },
+        { eng: "bridge", nep: "पुल" }, { eng: "park", nep: "पार्क" }, { eng: "garden", nep: "बगैंचा" },
+        { eng: "shop", nep: "पसल" }, { eng: "restaurant", nep: "रेस्टुरेन्ट" }, { eng: "hotel", nep: "होटल" },
+        { eng: "airport", nep: "विमानस्थल" }, { eng: "station", nep: "स्टेसन" }, { eng: "university", nep: "विश्वविद्यालय" },
+        { eng: "library", nep: "पुस्तकालय" }, { eng: "museum", nep: "संग्रहालय" }, { eng: "cinema", nep: "सिनेमा" }
+    ];
+    const commonList = [...commonBase, ...commonExtra].slice(0, 50);
+
+    // 2. Collective Noun (50 items)
+    const collectiveBase = [
+        { eng: "team", nep: "टोली" }, { eng: "family", nep: "परिवार" }, { eng: "class", nep: "कक्षा" },
+        { eng: "herd", nep: "बथान" }, { eng: "flock", nep: "बगाल" }, { eng: "crowd", nep: "भीड" },
+        { eng: "army", nep: "सेना" }, { eng: "committee", nep: "समिति" }, { eng: "choir", nep: "गायकदल" },
+        { eng: "bunch", nep: "गुच्छा" }
+    ];
+    const collectiveExtra = [
+        { eng: "group", nep: "समूह" }, { eng: "gang", nep: "टोली" }, { eng: "crew", nep: "चालक दल" },
+        { eng: "audience", nep: "दर्शक" }, { eng: "public", nep: "जनता" }, { eng: "band", nep: "ब्यान्ड" },
+        { eng: "cast", nep: "कलाकार" }, { eng: "faculty", nep: "शिक्षक समूह" }, { eng: "fleet", nep: "जहाज समूह" },
+        { eng: "forest", nep: "रुख समूह" }, { eng: "galaxy", nep: "तारा समूह" }, { eng: "pack", nep: "समूह (ब्वाँसो)" },
+        { eng: "pride", nep: "सिंह समूह" }, { eng: "school (fish)", nep: "माछा समूह" }, { eng: "shoal", nep: "माछा समूह" },
+        { eng: "swarm", nep: "मौरीको बथान" }, { eng: "troop", nep: "सैनिक दल" }, { eng: "battalion", nep: "बटालियन" },
+        { eng: "company", nep: "कम्पनी (सेना)" }, { eng: "division", nep: "डिभिजन" }, { eng: "squad", nep: "टुकडी" },
+        { eng: "platoon", nep: "पल्टन" }, { eng: "regiment", nep: "रेजिमेन्ट" }, { eng: "brigade", nep: "ब्रिगेड" },
+        { eng: "corps", nep: "कोर" }, { eng: "fleet", nep: "जहाज समूह" }, { eng: "armada", nep: "ठुलो जहाज समूह" },
+        { eng: "convoy", nep: "सुरक्षित यात्रा समूह" }, { eng: "caravan", nep: "गन्तव्य समूह" }, { eng: "posse", nep: "कानुन प्रवर्तन समूह" },
+        { eng: "staff", nep: "कर्मचारी" }, { eng: "board", nep: "निर्देशक समिति" }, { eng: "panel", nep: "प्यानल" },
+        { eng: "jury", nep: "जूरी" }, { eng: "council", nep: "परिषद" }, { eng: "cabinet", nep: "मन्त्रिपरिषद" },
+        { eng: "league", nep: "लीग" }, { eng: "club", nep: "क्लब" }, { eng: "society", nep: "समाज" },
+        { eng: "association", nep: "संघ" }, { eng: "union", nep: "युनियन" }
+    ];
+    const collectiveList = [...collectiveBase, ...collectiveExtra].slice(0, 50);
+
+    // 3. Abstract Noun (50 items)
+    const abstractBase = [
+        { eng: "honesty", nep: "इमानदारी" }, { eng: "happiness", nep: "खुशी" }, { eng: "love", nep: "माया" },
+        { eng: "courage", nep: "साहस" }, { eng: "wisdom", nep: "ज्ञान" }, { eng: "freedom", nep: "स्वतन्त्रता" },
+        { eng: "kindness", nep: "दयालुता" }, { eng: "strength", nep: "बल" }, { eng: "peace", nep: "शान्ति" },
+        { eng: "beauty", nep: "सुन्दरता" }
+    ];
+    const abstractExtra = [
+        { eng: "anger", nep: "रिस" }, { eng: "sadness", nep: "दुःख" }, { eng: "fear", nep: "डर" },
+        { eng: "hope", nep: "आशा" }, { eng: "trust", nep: "विश्वास" }, { eng: "loyalty", nep: "वफादारी" },
+        { eng: "patience", nep: "धैर्य" }, { eng: "bravery", nep: "वीरता" }, { eng: "intelligence", nep: "बुद्धिमत्ता" },
+        { eng: "creativity", nep: "रचनात्मकता" }, { eng: "imagination", nep: "कल्पना" }, { eng: "curiosity", nep: "जिज्ञासा" },
+        { eng: "pride", nep: "गर्व" }, { eng: "humility", nep: "विनम्रता" }, { eng: "generosity", nep: "उदारता" },
+        { eng: "gratitude", nep: "कृतज्ञता" }, { eng: "sympathy", nep: "सहानुभूति" }, { eng: "empathy", nep: "समानुभूति" },
+        { eng: "compassion", nep: "करुणा" }, { eng: "forgiveness", nep: "क्षमा" }, { eng: "justice", nep: "न्याय" },
+        { eng: "equality", nep: "समानता" }, { eng: "democracy", nep: "लोकतन्त्र" }, { eng: "liberty", nep: "स्वतन्त्रता" },
+        { eng: "victory", nep: "विजय" }, { eng: "defeat", nep: "पराजय" }, { eng: "success", nep: "सफलता" },
+        { eng: "failure", nep: "असफलता" }, { eng: "wealth", nep: "धन" }, { eng: "poverty", nep: "गरिबी" },
+        { eng: "fame", nep: "प्रसिद्धि" }, { eng: "glory", nep: "गौरव" }, { eng: "honor", nep: "सम्मान" },
+        { eng: "respect", nep: "आदर" }, { eng: "dignity", nep: "गरिमा" }, { eng: "integrity", nep: "इमानदारी" },
+        { eng: "morality", nep: "नैतिकता" }, { eng: "ethics", nep: "आचारशास्त्र" }, { eng: "virtue", nep: "सद्गुण" },
+        { eng: "vice", nep: "दुर्गुण" }
+    ];
+    const abstractList = [...abstractBase, ...abstractExtra].slice(0, 50);
+
+    // 4. Concrete Noun (50 items)
+    const concreteBase = [
+        { eng: "book", nep: "पुस्तक" }, { eng: "dog", nep: "कुकुर" }, { eng: "flower", nep: "फूल" },
+        { eng: "table", nep: "टेबल" }, { eng: "apple", nep: "स्याउ" }, { eng: "car", nep: "गाडी" },
+        { eng: "house", nep: "घर" }, { eng: "tree", nep: "रुख" }, { eng: "chair", nep: "कुर्सी" },
+        { eng: "phone", nep: "फोन" }
+    ];
+    const concreteExtra = [
+        { eng: "bottle", nep: "बोतल" }, { eng: "cup", nep: "कप" }, { eng: "plate", nep: "प्लेट" },
+        { eng: "spoon", nep: "चम्चा" }, { eng: "fork", nep: "काँटा" }, { eng: "knife", nep: "चक्कु" },
+        { eng: "computer", nep: "कम्प्युटर" }, { eng: "laptop", nep: "ल्यापटप" }, { eng: "television", nep: "टेलिभिजन" },
+        { eng: "radio", nep: "रेडियो" }, { eng: "refrigerator", nep: "फ्रिज" }, { eng: "microwave", nep: "माइक्रोवेभ" },
+        { eng: "oven", nep: "ओभन" }, { eng: "stove", nep: "चुलो" }, { eng: "bed", nep: "ओछ्यान" },
+        { eng: "pillow", nep: "तकिया" }, { eng: "blanket", nep: "कम्बल" }, { eng: "curtain", nep: "पर्दा" },
+        { eng: "carpet", nep: "गलैंचा" }, { eng: "clock", nep: "घडी" }, { eng: "watch", nep: "हात घडी" },
+        { eng: "glasses", nep: "चश्मा" }, { eng: "shoes", nep: "जुत्ता" }, { eng: "shirt", nep: "कमिज" },
+        { eng: "pant", nep: "पाइन्ट" }, { eng: "hat", nep: "टोपी" }, { eng: "bag", nep: "झोला" },
+        { eng: "key", nep: "साँचो" }, { eng: "umbrella", nep: "छाता" }, { eng: "newspaper", nep: "अखबार" },
+        { eng: "magazine", nep: "पत्रिका" }, { eng: "pen", nep: "कलम" }, { eng: "pencil", nep: "पेन्सिल" },
+        { eng: "eraser", nep: "रबर" }, { eng: "ruler", nep: "स्केल" }, { eng: "notebook", nep: "नोटबुक" },
+        { eng: "backpack", nep: "ब्याग" }, { eng: "lamp", nep: "बत्ती" }, { eng: "fan", nep: "पंखा" },
+        { eng: "heater", nep: "हिटर" }, { eng: "air conditioner", nep: "एसी" }
+    ];
+    const concreteList = [...concreteBase, ...concreteExtra].slice(0, 50);
+
+    // 5. Material Noun (50 items)
+    const materialBase = [
+        { eng: "gold", nep: "सुन" }, { eng: "silver", nep: "चाँदी" }, { eng: "wood", nep: "काठ" },
+        { eng: "iron", nep: "फलाम" }, { eng: "cotton", nep: "कपास" }, { eng: "plastic", nep: "प्लास्टिक" },
+        { eng: "glass", nep: "गिलास" }, { eng: "steel", nep: "स्टिल" }, { eng: "paper", nep: "कागज" },
+        { eng: "wool", nep: "ऊन" }
+    ];
+    const materialExtra = [
+        { eng: "copper", nep: "तामा" }, { eng: "bronze", nep: "कांस्य" }, { eng: "brass", nep: "पितल" },
+        { eng: "aluminum", nep: "एल्युमिनियम" }, { eng: "tin", nep: "टिन" }, { eng: "lead", nep: "सिसा" },
+        { eng: "zinc", nep: "जस्ता" }, { eng: "nickel", nep: "निकेल" }, { eng: "platinum", nep: "प्लेटिनम" },
+        { eng: "diamond", nep: "हीरा" }, { eng: "ruby", nep: "रूबी" }, { eng: "emerald", nep: "पन्ना" },
+        { eng: "sapphire", nep: "नीलम" }, { eng: "marble", nep: "संगमरमर" }, { eng: "granite", nep: "ग्रेनाइट" },
+        { eng: "sandstone", nep: "बलौटे ढुङ्गा" }, { eng: "limestone", nep: "चुनढुङ्गा" }, { eng: "clay", nep: "माटो" },
+        { eng: "brick", nep: "ईंटा" }, { eng: "cement", nep: "सिमेन्ट" }, { eng: "concrete", nep: "कंक्रीट" },
+        { eng: "rubber", nep: "रबर" }, { eng: "leather", nep: "छाला" }, { eng: "silk", nep: "रेशम" },
+        { eng: "nylon", nep: "नाइलन" }, { eng: "polyester", nep: "पोलिएस्टर" }, { eng: "rayon", nep: "रेयोन" },
+        { eng: "jute", nep: "पटुवा" }, { eng: "hemp", nep: "भांग" }, { eng: "linen", nep: "अलसी" },
+        { eng: "sponge", nep: "स्पन्ज" }, { eng: "foam", nep: "फोम" }, { eng: "charcoal", nep: "कोइला" },
+        { eng: "coal", nep: "कोइला" }, { eng: "petroleum", nep: "पेट्रोलियम" }, { eng: "gas", nep: "ग्यास" },
+        { eng: "hydrogen", nep: "हाइड्रोजन" }, { eng: "oxygen", nep: "अक्सिजन" }, { eng: "nitrogen", nep: "नाइट्रोजन" },
+        { eng: "carbon", nep: "कार्बन" }
+    ];
+    const materialList = [...materialBase, ...materialExtra].slice(0, 50);
+
+    // 6. Countable Noun (50 items)
+    const countableBase = [
+        { eng: "pen", nep: "कलम" }, { eng: "book", nep: "पुस्तक" }, { eng: "student", nep: "विद्यार्थी" },
+        { eng: "apple", nep: "स्याउ" }, { eng: "car", nep: "गाडी" }, { eng: "chair", nep: "कुर्सी" },
+        { eng: "bottle", nep: "बोतल" }, { eng: "egg", nep: "अण्डा" }, { eng: "house", nep: "घर" },
+        { eng: "bird", nep: "चरा" }
+    ];
+    const countableExtra = [
+        { eng: "dog", nep: "कुकुर" }, { eng: "cat", nep: "बिरालो" }, { eng: "cow", nep: "गाई" },
+        { eng: "horse", nep: "घोडा" }, { eng: "elephant", nep: "हात्ती" }, { eng: "lion", nep: "सिंह" },
+        { eng: "tiger", nep: "बाघ" }, { eng: "monkey", nep: "बाँदर" }, { eng: "rabbit", nep: "खरायो" },
+        { eng: "fish", nep: "माछा" }, { eng: "table", nep: "टेबल" }, { eng: "bed", nep: "ओछ्यान" },
+        { eng: "window", nep: "झ्याल" }, { eng: "door", nep: "ढोका" }, { eng: "road", nep: "सडक" },
+        { eng: "bridge", nep: "पुल" }, { eng: "park", nep: "पार्क" }, { eng: "garden", nep: "बगैंचा" },
+        { eng: "shop", nep: "पसल" }, { eng: "restaurant", nep: "रेस्टुरेन्ट" }, { eng: "hotel", nep: "होटल" },
+        { eng: "airport", nep: "विमानस्थल" }, { eng: "station", nep: "स्टेसन" }, { eng: "university", nep: "विश्वविद्यालय" },
+        { eng: "library", nep: "पुस्तकालय" }, { eng: "museum", nep: "संग्रहालय" }, { eng: "cinema", nep: "सिनेमा" },
+        { eng: "school", nep: "विद्यालय" }, { eng: "hospital", nep: "अस्पताल" }, { eng: "market", nep: "बजार" },
+        { eng: "temple", nep: "मन्दिर" }, { eng: "river", nep: "नदी" }, { eng: "lake", nep: "ताल" },
+        { eng: "forest", nep: "जंगल" }, { eng: "mountain", nep: "पहाड" }, { eng: "hill", nep: "डाँडा" },
+        { eng: "valley", nep: "उपत्यका" }, { eng: "plane", nep: "विमान" }, { eng: "train", nep: "रेल" },
+        { eng: "bus", nep: "बस" }, { eng: "bicycle", nep: "साइकल" }
+    ];
+    const countableList = [...countableBase, ...countableExtra].slice(0, 50);
+
+    // 7. Uncountable Noun (50 items)
+    const uncountableBase = [
+        { eng: "water", nep: "पानी" }, { eng: "milk", nep: "दूध" }, { eng: "rice", nep: "चामल" },
+        { eng: "sugar", nep: "चिनी" }, { eng: "information", nep: "जानकारी" }, { eng: "money", nep: "पैसा" },
+        { eng: "air", nep: "हावा" }, { eng: "sand", nep: "बालुवा" }, { eng: "salt", nep: "नुन" },
+        { eng: "oil", nep: "तेल" }
+    ];
+    const uncountableExtra = [
+        { eng: "flour", nep: "पीठो" }, { eng: "butter", nep: "मक्खन" }, { eng: "cheese", nep: "पनीर" },
+        { eng: "honey", nep: "मह" }, { eng: "jam", nep: "जाम" }, { eng: "bread", nep: "रोटी" },
+        { eng: "soup", nep: "सुप" }, { eng: "coffee", nep: "कफी" }, { eng: "tea", nep: "चिया" },
+        { eng: "juice", nep: "जुस" }, { eng: "beer", nep: "बियर" }, { eng: "wine", nep: "वाइन" },
+        { eng: "whisky", nep: "व्हिस्की" }, { eng: "rice", nep: "चामल" }, { eng: "wheat", nep: "गहुँ" },
+        { eng: "corn", nep: "मकै" }, { eng: "barley", nep: "जौ" }, { eng: "oats", nep: "ओट्स" },
+        { eng: "millet", nep: "कोदो" }, { eng: "buckwheat", nep: "फापर" }, { eng: "lentil", nep: "दाल" },
+        { eng: "bean", nep: "बीन" }, { eng: "pea", nep: "मटर" }, { eng: "soy", nep: "भटमास" },
+        { eng: "spice", nep: "मसला" }, { eng: "herb", nep: "जडीबुटी" }, { eng: "medicine", nep: "औषधि" },
+        { eng: "poison", nep: "विष" }, { eng: "fuel", nep: "इन्धन" }, { eng: "electricity", nep: "बिजुली" },
+        { eng: "energy", nep: "ऊर्जा" }, { eng: "heat", nep: "गर्मी" }, { eng: "cold", nep: "चिसो" },
+        { eng: "light", nep: "उज्यालो" }, { eng: "darkness", nep: "अन्धकार" }, { eng: "noise", nep: "आवाज" },
+        { eng: "silence", nep: "मौनता" }, { eng: "time", nep: "समय" }, { eng: "space", nep: "ठाउँ" },
+        { eng: "weather", nep: "मौसम" }, { eng: "climate", nep: "जलवायु" }
+    ];
+    const uncountableList = [...uncountableBase, ...uncountableExtra].slice(0, 50);
+
+    // 8. Compound Noun (50 items)
+    const compoundBase = [
+        { eng: "classroom", nep: "कक्षाकोठा" }, { eng: "toothpaste", nep: "दन्तमञ्जन" }, { eng: "bus stop", nep: "बस स्टप" },
+        { eng: "sunflower", nep: "सूर्यमुखी" }, { eng: "moonlight", nep: "जूनको उज्यालो" }, { eng: "girlfriend", nep: "प्रेमिका" },
+        { eng: "football", nep: "फुटबल" }, { eng: "rainfall", nep: "वर्षा" }, { eng: "notebook", nep: "नोटबुक" },
+        { eng: "shopkeeper", nep: "पसले" }
+    ];
+    const compoundExtra = [
+        { eng: "haircut", nep: "कपाल कटाइ" }, { eng: "eyebrow", nep: "भौं" }, { eng: "fingernail", nep: "नङ" },
+        { eng: "armchair", nep: "हात कुर्सी" }, { eng: "backpack", nep: "ब्याग" }, { eng: "baseball", nep: "बेसबल" },
+        { eng: "bathroom", nep: "बाथरुम" }, { eng: "bedroom", nep: "सुत्ने कोठा" }, { eng: "blackboard", nep: "ब्ल्याकबोर्ड" },
+        { eng: "bookshelf", nep: "पुस्तक राख्ने सेल्फ" }, { eng: "butterfly", nep: "पुतली" }, { eng: "candlestick", nep: "मैनबत्ती स्ट्याण्ड" },
+        { eng: "cheesecake", nep: "चीज केक" }, { eng: "cupcake", nep: "कपकेक" }, { eng: "daydream", nep: "दिवास्वप्न" },
+        { eng: "doorbell", nep: "ढोकाको घण्टी" }, { eng: "dragonfly", nep: "ड्रागनफ्लाई" }, { eng: "earring", nep: "कानको गहना" },
+        { eng: "firefighter", nep: "अग्निनियन्त्रक" }, { eng: "flowerpot", nep: "फूलको भाँडो" }, { eng: "grandfather", nep: "हजुरबुबा" },
+        { eng: "grandmother", nep: "हजुरआमा" }, { eng: "grasshopper", nep: "सल्लाद" }, { eng: "hairbrush", nep: "कपालको ब्रस" },
+        { eng: "handbag", nep: "ह्यान्डब्याग" }, { eng: "headache", nep: "टाउको दुखाइ" }, { eng: "landlord", nep: "घरधनी" },
+        { eng: "lighthouse", nep: "प्रकाशस्तम्भ" }, { eng: "makeup", nep: "मेकअप" }, { eng: "newspaper", nep: "अखबार" },
+        { eng: "pancake", nep: "प्यानकेक" }, { eng: "playground", nep: "खेल मैदान" }, { eng: "raincoat", nep: "पानीको कोट" },
+        { eng: "snowman", nep: "हिउँको मान्छे" }, { eng: "strawberry", nep: "स्ट्रबेरी" }, { eng: "suitcase", nep: "सुटकेस" },
+        { eng: "sunrise", nep: "सूर्योदय" }, { eng: "sunset", nep: "सूर्यास्त" }, { eng: "teapot", nep: "चियाको भाँडो" },
+        { eng: "toothbrush", nep: "दाँत माझ्ने ब्रस" }, { eng: "watermelon", nep: "तरबूज" }
+    ];
+    const compoundList = [...compoundBase, ...compoundExtra].slice(0, 50);
+
+    const nounCategories = [
+        { name: "Proper Noun (व्यक्तिवाचक)", examples: properList },
+        { name: "Common Noun (जातिवाचक)", examples: commonList },
+        { name: "Collective Noun (समूहवाचक)", examples: collectiveList },
+        { name: "Abstract Noun (भाववाचक)", examples: abstractList },
+        { name: "Concrete Noun (ठोस वाचक)", examples: concreteList },
+        { name: "Material Noun (द्रव्यवाचक)", examples: materialList },
+        { name: "Countable Noun (गणनीय)", examples: countableList },
+        { name: "Uncountable Noun (अगणनीय)", examples: uncountableList },
+        { name: "Compound Noun (यौगिक)", examples: compoundList }
+    ];
+
+    const VERBS_PER_PAGE = 5;
+    let currentCategory = 0;
+    let currentPages = [];
+    let currentPageIdx = 0;
+    let currentPageNouns = null;
+    let shuffledEnglish = [];
+    let shuffledNepali = [];
+    let matchedPairs = [];
+    let selectedCard = null;
+    let totalInPage = 5;
+    let globalTotalScore = 0;
+
+    // DOM elements (same)
+    const englishDiv = document.getElementById('englishList');
+    const nepaliDiv = document.getElementById('nepaliList');
+    const matchCountSpan = document.getElementById('matchCount');
+    const totalCountSpan = document.getElementById('totalCount');
+    const totalScoreSpan = document.getElementById('totalScoreSpan');
+    const statusDiv = document.getElementById('statusMsg');
+    const lineLayer = document.getElementById('lineLayer');
+    const nounSelect = document.getElementById('nounTypeSelect');
+    const prevBtn = document.getElementById('prevPageBtn');
+    const nextBtn = document.getElementById('nextPageBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const homeBtnTop = document.getElementById('homeBtnTop');
+
+    function updateGlobalTotalDisplay() { totalScoreSpan.innerText = globalTotalScore; }
+    homeBtnTop.addEventListener('click', () => { window.location.href = 'index.html'; });
+
+    // Speech & sound (identical, omitted for brevity but included in full code)
+    function speakText(text, lang) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+    }
+    let audioContext = null;
+    function getAudioContext() {
+        if (audioContext) return audioContext;
+        try { audioContext = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { return null; }
+        return audioContext;
+    }
+    function playSoftBeep() {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        if (ctx.state === 'suspended') ctx.resume();
+        try {
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.value = 1000;
+            gain.gain.value = 0.12;
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+            osc.stop(now + 0.2);
+        } catch(e) {}
+    }
+    function playBuzz() {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        if (ctx.state === 'suspended') ctx.resume();
+        try {
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sawtooth';
+            osc.frequency.value = 490;
+            gain.gain.value = 0.35;
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, now + 0.35);
+            osc.stop(now + 0.35);
+        } catch(e) {}
+    }
+
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function buildShuffledColumns(nounsArr) {
+        const engItems = nounsArr.map((noun, idx) => ({ text: noun.eng, pairId: idx }));
+        const nepItems = nounsArr.map((noun, idx) => ({ text: noun.nep, pairId: idx }));
+        return { engShuffled: shuffle([...engItems]), nepShuffled: shuffle([...nepItems]) };
+    }
+
+    function clearLines() { lineLayer.innerHTML = ''; }
+    function clearSelection() {
+        if (selectedCard && selectedCard.element) selectedCard.element.classList.remove('selected');
+        selectedCard = null;
+    }
+
+    function drawMatchLines() {
+        clearLines();
+        if (matchedPairs.length === 0) return;
+        const container = document.getElementById('matchArea');
+        const containerRect = container.getBoundingClientRect();
+        if (containerRect.width === 0) return;
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "100%");
+        svg.style.position = "absolute";
+        svg.style.top = "0";
+        svg.style.left = "0";
+        for (let pair of matchedPairs) {
+            const engRect = pair.engEl.getBoundingClientRect();
+            const nepRect = pair.nepEl.getBoundingClientRect();
+            const startX = engRect.right - containerRect.left - 5;
+            const startY = (engRect.top + engRect.bottom) / 2 - containerRect.top;
+            const endX = nepRect.left - containerRect.left + 5;
+            const endY = (nepRect.top + nepRect.bottom) / 2 - containerRect.top;
+            const line = document.createElementNS(svgNS, "line");
+            line.setAttribute("x1", startX);
+            line.setAttribute("y1", startY);
+            line.setAttribute("x2", endX);
+            line.setAttribute("y2", endY);
+            line.classList.add("match-line");
+            svg.appendChild(line);
+        }
+        lineLayer.appendChild(svg);
+    }
+
+    function updateScoreUI() {
+        matchCountSpan.innerText = matchedPairs.length;
+        if (matchedPairs.length === totalInPage) {
+            statusDiv.innerHTML = "🎉 PERFECT! All matched! Go to next page 🎉";
+            statusDiv.style.backgroundColor = "#d4f5d0";
+        } else {
+            statusDiv.style.backgroundColor = "#fff0d4";
+        }
+    }
+
+    function attemptMatch(newType, newElement, newPairId) {
+        if (!selectedCard) return false;
+        const { type: selType, element: selEl, pairId: selPair } = selectedCard;
+        if ((selType === 'eng' && newType === 'nep') || (selType === 'nep' && newType === 'eng')) {
+            if (selPair === newPairId) {
+                if (selEl.classList.contains('matched') || newElement.classList.contains('matched')) {
+                    statusDiv.innerHTML = "⛔ Already matched! Pick a new word.";
+                    clearSelection();
+                    return false;
+                }
+                selEl.classList.add('matched');
+                newElement.classList.add('matched');
+                matchedPairs.push({ engEl: selType === 'eng' ? selEl : newElement, nepEl: selType === 'nep' ? selEl : newElement, pairId: selPair });
+                globalTotalScore++;
+                updateGlobalTotalDisplay();
+                updateScoreUI();
+                drawMatchLines();
+                clearSelection();
+                return true;
+            } else {
+                playBuzz();
+                [selEl, newElement].forEach(el => {
+                    el.classList.add('wrong-flash');
+                    setTimeout(() => el.classList.remove('wrong-flash'), 300);
+                });
+                statusDiv.innerHTML = "❌ Wrong match! Listen to buzzer, try again ❌";
+                clearSelection();
+                return false;
+            }
+        } else {
+            clearSelection();
+            if (!newElement.classList.contains('matched')) {
+                selectedCard = { type: newType, element: newElement, pairId: newPairId };
+                newElement.classList.add('selected');
+                statusDiv.innerHTML = `👉 Selected: ${newElement.innerText} → now pick from the opposite column.`;
+            }
+            return false;
+        }
+    }
+
+    function handleCardClick(e) {
+        const card = e.target.closest('.word-card');
+        if (!card) return;
+        if (card.classList.contains('matched')) {
+            statusDiv.innerHTML = "🔒 Already matched! Choose a different word.";
+            return;
+        }
+        const cardType = card.getAttribute('data-type');
+        const pairId = parseInt(card.getAttribute('data-pairid'));
+        const wordText = card.innerText.trim();
+        if (cardType === 'eng') speakText(wordText, 'en-US');
+        else speakText(wordText, 'ne-NP');
+        playSoftBeep();
+        if (isNaN(pairId)) return;
+        if (!selectedCard) {
+            clearSelection();
+            selectedCard = { type: cardType, element: card, pairId };
+            card.classList.add('selected');
+            statusDiv.innerHTML = `✨ Selected: ${wordText} → now match with opposite side ✨`;
+            return;
+        }
+        attemptMatch(cardType, card, pairId);
+    }
+
+    function renderCurrentPage() {
+        if (!currentPageNouns) return;
+        clearSelection();
+        matchedPairs = [];
+        clearLines();
+        totalInPage = currentPageNouns.length;
+        totalCountSpan.innerText = totalInPage;
+        updateScoreUI();
+        const { engShuffled, nepShuffled } = buildShuffledColumns(currentPageNouns);
+        shuffledEnglish = engShuffled;
+        shuffledNepali = nepShuffled;
+        englishDiv.innerHTML = '';
+        shuffledEnglish.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card eng-card';
+            card.textContent = item.text;
+            card.setAttribute('data-type', 'eng');
+            card.setAttribute('data-pairid', item.pairId);
+            englishDiv.appendChild(card);
+        });
+        nepaliDiv.innerHTML = '';
+        shuffledNepali.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card nep-card';
+            card.textContent = item.text;
+            card.setAttribute('data-type', 'nep');
+            card.setAttribute('data-pairid', item.pairId);
+            nepaliDiv.appendChild(card);
+        });
+        const categoryName = nounCategories[currentCategory].name;
+        statusDiv.innerHTML = `📘 ${categoryName} · Page ${currentPageIdx+1}/${currentPages.length} · Tap words to match!`;
+        statusDiv.style.backgroundColor = "#fff0d4";
+    }
+
+    function loadCategory(categoryIndex) {
+        currentCategory = categoryIndex;
+        const fullSet = nounCategories[currentCategory].examples;
+        const pages = [];
+        for (let i = 0; i < fullSet.length; i += VERBS_PER_PAGE) {
+            pages.push(fullSet.slice(i, i + VERBS_PER_PAGE));
+        }
+        currentPages = pages;
+        currentPageIdx = 0;
+        currentPageNouns = currentPages[0];
+        renderCurrentPage();
+    }
+
+    function nextPage() {
+        if (currentPageIdx + 1 < currentPages.length) {
+            currentPageIdx++;
+            currentPageNouns = currentPages[currentPageIdx];
+            renderCurrentPage();
+        } else {
+            statusDiv.innerHTML = "📖 You're on the last page of this noun type!";
+        }
+    }
+    function prevPage() {
+        if (currentPageIdx - 1 >= 0) {
+            currentPageIdx--;
+            currentPageNouns = currentPages[currentPageIdx];
+            renderCurrentPage();
+        } else {
+            statusDiv.innerHTML = "🌟 This is the first page!";
+        }
+    }
+    function resetCurrentPage() {
+        if (currentPageNouns) renderCurrentPage();
+        statusDiv.innerHTML = "🔄 Page reset! Both columns shuffled. Total score remains.";
+    }
+
+    const matchZone = document.getElementById('matchArea');
+    matchZone.addEventListener('click', handleCardClick);
+    prevBtn.addEventListener('click', prevPage);
+    nextBtn.addEventListener('click', nextPage);
+    resetBtn.addEventListener('click', resetCurrentPage);
+    nounSelect.addEventListener('change', (e) => loadCategory(parseInt(e.target.value)));
+    window.addEventListener('resize', () => setTimeout(drawMatchLines, 30));
+    new ResizeObserver(() => drawMatchLines()).observe(matchZone);
+
+    updateGlobalTotalDisplay();
+    loadCategory(0);
+</script>
+</body>
+</html>

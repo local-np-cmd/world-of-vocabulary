@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Comprehension Game | 10 Stories | English & Nepali</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1f6d7a 0%, #0e4b57 100%);
+            font-family: 'Comic Neue', 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI Emoji', sans-serif;
+            color: #2c3e2f;
+            line-height: 1.5;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-container {
+            max-width: 1400px;
+            width: 100%;
+            background: #fffaf0;
+            border-radius: 4rem 4rem 3rem 3rem;
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.8);
+            padding: 1.2rem 1.5rem 2rem;
+            position: relative;
+        }
+
+        .home-btn-top {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.2rem;
+            background: #ff8c5a;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 8px 18px;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: transform 0.08s linear, background 0.2s;
+            color: white;
+            box-shadow: 0 4px 0 #c25a2a;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 20;
+            text-decoration: none;
+        }
+
+        .home-btn-top:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #c25a2a;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin: 0.5rem 0 0.25rem;
+            background: linear-gradient(120deg, #3a7ca5, #1d5a7a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            font-weight: 800;
+            padding-top: 0.5rem;
+        }
+
+        .subhead {
+            text-align: center;
+            font-weight: bold;
+            background: #fff0cf;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 1rem;
+            padding: 0.4rem 1.5rem;
+            border-radius: 3rem;
+            font-size: 0.9rem;
+            color: #d66b2d;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #f7e9cf;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4rem;
+            margin-bottom: 1.8rem;
+            gap: 12px;
+            margin-top: 0.5rem;
+        }
+
+        .score-panel {
+            background: #2e5c4a;
+            padding: 0.3rem 1rem;
+            border-radius: 3rem;
+            color: #f9eec1;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: inset 0 -1px 0 #3d7860, 0 4px 0 #1f3e32;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .score-item {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+        }
+
+        .story-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff5e6;
+            padding: 0.2rem 1rem;
+            border-radius: 3rem;
+            flex-wrap: wrap;
+            flex-shrink: 1;
+            min-width: 0;
+        }
+
+        .story-selector label {
+            font-weight: bold;
+            color: #b45f2b;
+            white-space: nowrap;
+        }
+
+        select {
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+            border: none;
+            background: #ffefcd;
+            cursor: pointer;
+            outline: none;
+            max-width: 100%;
+            text-overflow: ellipsis;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: #f7b32b;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding: 8px 18px;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: transform 0.08s linear;
+            color: #2d2b1f;
+            box-shadow: 0 4px 0 #a45d2a;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #a45d2a;
+        }
+
+        .reset-btn {
+            background: #6c9ebf;
+            color: white;
+            box-shadow: 0 4px 0 #3e607a;
+        }
+
+        .lang-btn, .speech-btn {
+            background: #56ab7c;
+            color: white;
+            box-shadow: 0 4px 0 #2e6b49;
+        }
+
+        .read-btn {
+            background: #ffb347;
+            color: #2d2b1f;
+            box-shadow: 0 4px 0 #a45d2a;
+        }
+
+        .message-box {
+            background: #fff0d4;
+            border-radius: 2.5rem;
+            padding: 0.4rem 1rem;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-align: center;
+            color: #bf5e1a;
+            flex-shrink: 1;
+            min-width: 150px;
+        }
+
+        .passage-card {
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ffe0b0;
+        }
+
+        .passage-header {
+            background: #ffefcf;
+            padding: 0.8rem 1.2rem;
+            border-bottom: 3px solid #f5bc70;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .passage-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #c0692c;
+        }
+
+        .completed-badge {
+            background: #a7d0a7;
+            color: #1b6b1b;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+            display: inline-block;
+        }
+
+        .passage-text {
+            padding: 1.2rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #2d4a3e;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .questions-card {
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ffe0b0;
+        }
+
+        .questions-header {
+            background: #ffefcf;
+            padding: 0.6rem 1.2rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #c0692c;
+            border-bottom: 2px solid #f5bc70;
+        }
+
+        .question-item {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #ffe0b0;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #b45f2b;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #fef5e7;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+        }
+
+        .option input {
+            accent-color: #56ab7c;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .highlight-correct {
+            background: #a7d0a7;
+            border: 2px solid #2e8b57;
+            font-weight: bold;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: bold;
+            color: #966f3a;
+            background: #fff2df;
+            width: fit-content;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 720px) {
+            .game-container { padding: 1rem; }
+            .home-btn-top {
+                position: relative;
+                top: auto;
+                left: auto;
+                display: inline-flex;
+                margin: 0 0 0.8rem 0;
+                width: fit-content;
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+            .home-wrapper {
+                display: flex;
+                justify-content: flex-start;
+                margin-bottom: 0.5rem;
+            }
+            h1 { font-size: 1.5rem; margin-top: 0.2rem; padding-top: 0; }
+            .top-bar { flex-direction: column; align-items: stretch; margin-top: 0; }
+            .story-selector { justify-content: space-between; }
+            .nav-buttons { justify-content: center; }
+            .message-box { text-align: center; }
+            .options { flex-direction: column; gap: 0.5rem; }
+        }
+
+        @media (min-width: 721px) {
+            .home-wrapper {
+                display: block;
+                position: relative;
+            }
+            .home-btn-top {
+                position: absolute;
+                top: 1.2rem;
+                left: 1.2rem;
+            }
+            h1 {
+                margin-top: 0.5rem;
+                padding-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-container" id="gameApp">
+    <div class="home-wrapper">
+        <button id="homeBtnTop" class="home-btn-top">🏠 HOME</button>
+    </div>
+
+    <h1>📖 COMPREHENSION MASTER</h1>
+    <div style="text-align: center;"><span class="subhead">🎧 10 bilingual stories • Read & answer • Tap to speak 🎧</span></div>
+
+    <div class="top-bar">
+        <div class="score-panel">
+            <div class="score-item">📖 STORY: <span id="storyCount">1</span> / <span id="totalStories">10</span></div>
+            <div class="score-item">🏆 COMPLETED: <span id="totalScoreSpan">0</span></div>
+        </div>
+        <div class="story-selector">
+            <label>📚 STORY:</label>
+            <select id="storySelect"></select>
+        </div>
+        <div class="nav-buttons">
+            <button id="prevStoryBtn" class="page-btn">◀ PREV</button>
+            <button id="nextStoryBtn" class="page-btn">NEXT ▶</button>
+        </div>
+        <div class="message-box" id="statusMsg">✨ Pick a story, then answer!</div>
+    </div>
+
+    <!-- Extra controls for language and speech -->
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 1.5rem;">
+        <div class="story-selector" style="background: #fff5e6;">
+            <label>🌐 LANGUAGE:</label>
+            <select id="languageSelect">
+                <option value="en">🇬🇧 English</option>
+                <option value="np">🇳🇵 Nepali</option>
+            </select>
+        </div>
+        <button id="speechToggleBtn" class="speech-btn">🔇 OFF</button>
+        <button id="readBtn" class="read-btn">🔊 Read Aloud</button>
+        <button id="resetStoryBtn" class="reset-btn">🔄 Reset Story</button>
+    </div>
+
+    <div class="passage-card">
+        <div class="passage-header">
+            <div class="passage-title" id="storyTitle">The Lion and the Mouse</div>
+            <span id="completedBadge" class="completed-badge" style="display: none;">✓ Completed</span>
+        </div>
+        <div class="passage-text" id="passageText">Loading...</div>
+    </div>
+
+    <div class="questions-card">
+        <div class="questions-header">📝 Comprehension Questions</div>
+        <div id="questionsContainer"></div>
+    </div>
+
+    <div style="text-align: center; margin: 1rem 0;">
+        <button id="submitBtn" class="submit-btn" style="background: #56ab7c; box-shadow: 0 4px 0 #2e6b49; padding: 0.5rem 2rem; font-size: 1rem;">✅ Check Answers</button>
+    </div>
+
+    <div class="footer-note">
+        💡 After 3 wrong tries, the correct answer is highlighted and read aloud. All correct = button changes to Next Story.
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // 10 STORIES DATA (English + Nepali)
+    // --------------------------------------------------------------
+    const storiesData = [
+        { title: "The Lion and the Mouse", enText: "Once a lion was sleeping in the forest. A little mouse ran over his body. The lion woke up and caught the mouse. The mouse begged for mercy. The lion laughed and let him go. Later, the lion was caught in a hunter's net. The mouse heard his roar and came to help. The mouse gnawed the ropes and set the lion free. The lion thanked the mouse. Kindness is never wasted.", npText: "एकपटक जंगलमा एउटा सिंह सुतिरहेको थियो। एउटा सानो मुसा उसको शरीरमाथि दौडियो। सिंह उठ्यो र मुसालाई समात्यो। मुसाले दया माग्यो। सिंह हाँस्यो र उसलाई जान दियो। पछि, सिंह एक शिकारीको जालमा फस्यो। मुसाले उसको गर्जन सुन्यो र मद्दत गर्न आयो। मुसाले डोरी काट्यो र सिंहलाई मुक्त गर्यो। सिंहले मुसालाई धन्यवाद दियो। दया कहिल्यै बेकार हुँदैन।", enQuestions: [{ text: "What was the lion doing at first?", options: ["Running", "Sleeping", "Eating", "Roaring"], correct: 1 }, { text: "How did the mouse help the lion later?", options: ["Brought food", "Gnawed the ropes", "Called other animals", "Fought the hunter"], correct: 1 }, { text: "What is the moral of the story?", options: ["Lions are strong", "Mice are clever", "Kindness is never wasted", "Never trust a lion"], correct: 2 }], npQuestions: [{ text: "सुरुमा सिंह के गर्दै थियो?", options: ["दौडदै", "सुत्दै", "खाँदै", "गर्जदै"], correct: 1 }, { text: "मुसाले सिंहलाई कसरी मद्दत गर्यो?", options: ["खाना ल्याएर", "डोरी काटेर", "अरू जनावर बोलाएर", "शिकारीसंग लडेर"], correct: 1 }, { text: "यस कथाको नैतिक के हो?", options: ["सिंह बलियो हुन्छ", "मुसा चलाख हुन्छ", "दया कहिल्यै बेकार हुँदैन", "सिंहलाई कहिल्यै विश्वास नगर्नु"], correct: 2 }] },
+        { title: "The Fox and the Grapes", enText: "A hungry fox saw a bunch of grapes hanging from a high vine. He jumped and jumped but could not reach them. Finally, he gave up and said, 'Those grapes are sour anyway.' So he walked away. The story teaches us that we often pretend to dislike what we cannot have.", npText: "एउटा भोको फ्युकोले अग्लो बोटमा अंगूरको गुच्छा झुण्डिएको देख्यो। उसले उफ्रियो तर पुगेन। अन्त्यमा उसले हार मान्यो र भन्यो, 'ती अंगूर तिता छन्।' त्यसपछि ऊ हिँड्यो। यो कथाले हामीलाई सिकाउँछ कि हामी प्रायः नपाउने कुरालाई नराम्रो भन्छौं।", enQuestions: [{ text: "What did the fox want?", options: ["Water", "Grapes", "Meat", "Rest"], correct: 1 }, { text: "Why did the fox give up?", options: ["He was too tired", "The grapes were sour", "He couldn't reach them", "A farmer came"], correct: 2 }, { text: "What lesson does the story teach?", options: ["Try harder", "Grapes are tasty", "Pretend to dislike what you can't get", "Foxes are clever"], correct: 2 }], npQuestions: [{ text: "फ्युकोलाई के चाहियो?", options: ["पानी", "अंगूर", "मासु", "आराम"], correct: 1 }, { text: "फ्युकोले किन हार मान्यो?", options: ["धेरै थकित थियो", "अंगूर तिता थिए", "पुग्न सकेन", "किसान आयो"], correct: 2 }, { text: "यो कथाले के सिकाउँछ?", options: ["धेरै मेहनत गर", "अंगूर मीठो हुन्छ", "नपाउने कुरालाई नराम्रो भन्ने बानी", "फ्युको चलाख हुन्छ"], correct: 2 }] },
+        { title: "The Ant and the Grasshopper", enText: "All summer, the ant worked hard storing food. The grasshopper sang and played. When winter came, the ant had plenty to eat. The grasshopper was hungry and asked for help. The ant told him, 'You should have worked when there was time.' The grasshopper learned to prepare for the future.", npText: "गर्मीमा कमिलाले खाना जम्मा गर्न मेहनत गर्यो। सल्लाद खेल्यो र गायो। जाडो आउँदा कमिलासँग प्रशस्त खाना थियो। सल्लाद भोको थियो र मद्दत माग्यो। कमिलाले भन्यो, 'समय हुँदा तिमीले पनि काम गर्नुपर्थ्यो।' सल्लादले भविष्यको तयारी गर्न सिक्यो।", enQuestions: [{ text: "What did the ant do in summer?", options: ["Played", "Slept", "Worked", "Sang"], correct: 2 }, { text: "Why was the grasshopper hungry in winter?", options: ["He ate all his food", "He didn't prepare", "The ant stole his food", "There was no food"], correct: 1 }, { text: "What is the lesson?", options: ["Work hard in time", "Singing is bad", "Ants are selfish", "Winter is cold"], correct: 0 }], npQuestions: [{ text: "गर्मीमा कमिलाले के गर्यो?", options: ["खेल्यो", "सुत्यो", "काम गर्यो", "गायो"], correct: 2 }, { text: "सल्लाद जाडोमा किन भोको थियो?", options: ["उसले सबै खाना खायो", "उसले तयारी गरेन", "कमिलाले उसको खाना चोर्यो", "खाना थिएन"], correct: 1 }, { text: "यसको शिक्षा के हो?", options: ["समयमा मेहनत गर", "गाउनु नराम्रो हो", "कमिला स्वार्थी हुन्छ", "जाडो चिसो हुन्छ"], correct: 0 }] },
+        { title: "The Tortoise and the Hare", enText: "The hare laughed at the tortoise for being slow. The tortoise challenged him to a race. The hare ran fast and stopped to rest under a tree. He fell asleep. The tortoise kept walking slowly and passed the sleeping hare. He won the race. Slow and steady wins the race.", npText: "खरायोले कछुवाको ढिलो गतिमा हाँस्यो। कछुवाले दौडको चुनौती दियो। खरायो दौडियो र रुखमुनि आराम गर्न रोकियो। उसलाई निद्रा लाग्यो। कछुवा बिस्तारै हिँड्दै गयो र सुतेको खरायोलाई उछिन्यो। ऊ दौड जित्यो। ढिलो तर स्थिरले जित्छ।", enQuestions: [{ text: "Why did the hare stop?", options: ["To eat", "To rest and fell asleep", "To talk", "The race ended"], correct: 1 }, { text: "Who won the race?", options: ["Hare", "Tortoise", "Both", "Neither"], correct: 1 }, { text: "What is the moral?", options: ["Fast is best", "Sleep is important", "Slow and steady wins", "Hares are lazy"], correct: 2 }], npQuestions: [{ text: "खरायो किन रोकियो?", options: ["खानको लागि", "आराम गर्न र निदाउन", "कुरा गर्न", "दौड सकियो"], correct: 1 }, { text: "दौड कसले जित्यो?", options: ["खरायो", "कछुवा", "दुवै", "कोही होइन"], correct: 1 }, { text: "नैतिक के हो?", options: ["छिटो राम्रो", "निद्रा महत्त्वपूर्ण", "ढिलो तर स्थिरले जित्छ", "खरायो अल्छी हुन्छ"], correct: 2 }] },
+        { title: "The Boy Who Cried Wolf", enText: "A shepherd boy cried 'Wolf!' as a joke. Villagers came to help but found no wolf. He did it again. Later, a real wolf came. He cried for help, but no one believed him. The wolf ate his sheep. Always tell the truth.", npText: "गोठालो केटाले 'ब्वाँसो!' भनेर झुट बोल्यो। गाउँले मद्दत आए तर ब्वाँसो थिएन। फेरि उसले त्यसै गर्यो। पछि साँच्चै ब्वाँसो आयो। उसले मद्दत माग्यो तर कसैले विश्वास गरेन। ब्वाँसोले भेडा खायो। सधैं सत्य बोल्नुपर्छ।", enQuestions: [{ text: "What did the boy cry first time?", options: ["Help", "Wolf", "Fire", "Thief"], correct: 1 }, { text: "Why didn't villagers come the last time?", options: ["They were busy", "They didn't believe him", "They were scared", "It was night"], correct: 1 }, { text: "Lesson?", options: ["Don't lie", "Run fast", "Wolves are dangerous", "Sheep are important"], correct: 0 }], npQuestions: [{ text: "पहिलो पटक केटाले के भन्यो?", options: ["मद्दत", "ब्वाँसो", "आगो", "चोर"], correct: 1 }, { text: "पछिल्लो पटक गाउँले किन आएनन्?", options: ["व्यस्त थिए", "विश्वास गरेनन्", "डराएका थिए", "रात थियो"], correct: 1 }, { text: "शिक्षा?", options: ["झुट नबोल", "छिटो दौड", "ब्वाँसो खतरनाक", "भेडा महत्त्वपूर्ण"], correct: 0 }] },
+        { title: "The Golden Touch", enText: "King Midas loved gold. He wished everything he touched turned to gold. His wish was granted. But when he touched his food, it became gold. He couldn't eat. He even turned his daughter into gold. He realized wealth isn't everything.", npText: "राजा माइडसलाई सुन मन पर्थ्यो। उसले छुने सबै सुन बनोस् भन्ने इच्छा गर्यो। इच्छा पूरा भयो। तर खाना छुँदा त्यो पनि सुन भयो। ऊ खान सकेन। उसले छोरीलाई पनि सुन बनायो। उसले बुझ्यो धन नै सबै होइन।", enQuestions: [{ text: "What did Midas wish for?", options: ["Gold touch", "Long life", "Power", "Fame"], correct: 0 }, { text: "What problem did the wish cause?", options: ["He became poor", "He couldn't eat", "He lost his kingdom", "He slept too much"], correct: 1 }, { text: "Moral?", options: ["Gold is good", "Be careful what you wish for", "Kings are greedy", "Family matters"], correct: 1 }], npQuestions: [{ text: "माइडसले के चाह्यो?", options: ["सुनको स्पर्श", "लामो आयु", "शक्ति", "प्रसिद्धि"], correct: 0 }, { text: "इच्छाले के समस्या निम्त्यायो?", options: ["उ गरिब भयो", "खान सकेन", "राज्य गुमायो", "धेरै सुत्यो"], correct: 1 }, { text: "नैतिक?", options: ["सुन राम्रो", "इच्छा गर्दा सावधान रहनु", "राजा लोभी हुन्छ", "परिवार महत्त्वपूर्ण"], correct: 1 }] },
+        { title: "The Wind and the Sun", enText: "The wind and the sun argued who was stronger. They saw a traveler wearing a coat. Whoever made the traveler remove his coat would win. The wind blew hard, but the traveler held his coat tighter. The sun shone warmly. The traveler removed his coat. Kindness wins over force.", npText: "हावा र सूर्यले को बलियो भन्ने बहस गरे। उनीहरूले कोट लगाएको यात्री देखे। जसले कोट हटाउँछ उसैले जित्छ। हावा चल्यो तर यात्रीले कोट कस्सियो। सूर्यले न्यानो घाम दियो। यात्रीले कोट फुकाल्यो। दयाले बललाई जित्छ।", enQuestions: [{ text: "What did the wind do?", options: ["Shone", "Blew hard", "Rained", "Snowed"], correct: 1 }, { text: "Who won?", options: ["Wind", "Sun", "Both", "Neither"], correct: 1 }, { text: "Moral?", options: ["Force is best", "Sun is hot", "Gentle persuasion wins", "Never argue"], correct: 2 }], npQuestions: [{ text: "हावाले के गर्यो?", options: ["चम्कियो", "जोडले चल्यो", "पानी पर्‍यो", "हिउँ पर्‍यो"], correct: 1 }, { text: "को जित्यो?", options: ["हावा", "सूर्य", "दुवै", "कोही होइन"], correct: 1 }, { text: "शिक्षा?", options: ["बल राम्रो", "सूर्य तातो हुन्छ", "नम्रताले जित्छ", "बहस नगर्नु"], correct: 2 }] },
+        { title: "The Thirsty Crow", enText: "A thirsty crow found a pitcher with little water at the bottom. He couldn't reach it. He dropped pebbles into the pitcher. The water rose. He drank and quenched his thirst. Where there is a will, there is a way.", npText: "तिर्खाएको कागले थोरै पानी भएको गाग्रो देख्यो। पुग्न सकेन। ढुंगा टुक्रा गाग्रोमा हाल्यो। पानी माथि आयो। कागले पानी पियो र तिर्खा मेटायो। इच्छा भए उपाय हुन्छ।", enQuestions: [{ text: "What did the crow drink?", options: ["Juice", "Water", "Milk", "Oil"], correct: 1 }, { text: "How did he get water?", options: ["Flew away", "Broke pitcher", "Dropped pebbles", "Called friend"], correct: 2 }, { text: "Moral?", options: ["Crows are clever", "Never give up", "Water is life", "Pebbles help"], correct: 1 }], npQuestions: [{ text: "कागले के पियो?", options: ["जुस", "पानी", "दूध", "तेल"], correct: 1 }, { text: "उसले कसरी पानी पायो?", options: ["उड्यो", "गाग्रो भाँच्यो", "ढुंगा हाल्यो", "साथी बोलायो"], correct: 2 }, { text: "शिक्षा?", options: ["काग चलाख हुन्छ", "हार नमान्नु", "पानी नै जीवन हो", "ढुंगा सहायक"], correct: 1 }] },
+        { title: "The Goose with Golden Eggs", enText: "A farmer had a goose that laid a golden egg each day. He became greedy and wanted all eggs at once. He killed the goose to get them, but found nothing. He lost the goose and future eggs. Greed can lead to loss.", npText: "एक किसानसँग हाँस थियो जसले दैनिक सुनको अण्डा दिन्थ्यो। उ लोभी भयो र एकै पटक सबै अण्डा चाह्यो। उसले हाँस मार्यो तर केही पाएन। उसले हाँस र भविष्यका अण्डा दुवै गुमायो। लोभले नोक्सान दिन्छ।", enQuestions: [{ text: "What did the goose lay?", options: ["Eggs", "Gold", "Golden eggs", "Feathers"], correct: 2 }, { text: "Why did the farmer kill the goose?", options: ["It was sick", "He was greedy", "It stopped laying", "He needed food"], correct: 1 }, { text: "Lesson?", options: ["Don't be greedy", "Geese are valuable", "Eggs are gold", "Farmers are foolish"], correct: 0 }], npQuestions: [{ text: "हाँसले के दिन्थ्यो?", options: ["अण्डा", "सुन", "सुनको अण्डा", "प्वाँख"], correct: 2 }, { text: "किसानले हाँस किन मार्यो?", options: ["बिरामी थियो", "लोभले", "अण्डा दिन छोडेको थियो", "खाना चाहियो"], correct: 1 }, { text: "पाठ?", options: ["लोभ नगर्नु", "हाँस बहुमूल्य", "अण्डा सुन", "किसान मूर्ख हुन्छ"], correct: 0 }] },
+        { title: "Honesty is the Best Policy", enText: "A woodcutter dropped his axe into a river. A fairy appeared and returned his axe along with gold and silver axes as a reward for his honesty. He refused the extra axes. The fairy gave him all as a gift. Honesty pays.", npText: "एक काठ काट्नेले आफ्नो बन्चरो नदीमा खसायो। परी आयो र उसको इमानदारीको पुरस्कार स्वरूप सुन र चाँदीको बन्चरो पनि दियो। उसले अतिरिक्त बन्चरो लिन अस्वीकार गर्यो। परीले सबै उपहार दिइन्। इमानदारीको फल मीठो।", enQuestions: [{ text: "What did the woodcutter lose?", options: ["Gold", "Axe", "Silver", "Fairy"], correct: 1 }, { text: "Why did the fairy reward him?", options: ["He was poor", "Honesty", "He begged", "He worked hard"], correct: 1 }, { text: "Moral?", options: ["Honesty is best", "Fairy helps", "Axes are valuable", "Don't drop tools"], correct: 0 }], npQuestions: [{ text: "काठ काट्नेले के हरायो?", options: ["सुन", "बन्चरो", "चाँदी", "परी"], correct: 1 }, { text: "परीले किन पुरस्कार दिइन्?", options: ["उ गरिब थियो", "इमानदारी", "भीख माग्यो", "मेहनती थियो"], correct: 1 }, { text: "नैतिक?", options: ["इमानदारी राम्रो", "परीले मद्दत गर्छ", "बन्चरो बहुमूल्य", "औजार नखसाउनु"], correct: 0 }] }
+    ];
+
+    const totalStories = storiesData.length;
+    let currentStoryIndex = 0;
+    let currentLanguage = "en";
+    let speechEnabled = false;
+    let storyCompletedFlags = new Array(totalStories).fill(false);
+    let totalCompleted = 0;
+    let questionAttempts = [];
+    let userSelections = [];
+    let waitingForNext = false;   // flag to know if we are in "Next Story" mode
+
+    // DOM elements
+    const storySelect = document.getElementById('storySelect');
+    const languageSelect = document.getElementById('languageSelect');
+    const speechToggleBtn = document.getElementById('speechToggleBtn');
+    const readBtn = document.getElementById('readBtn');
+    const resetStoryBtn = document.getElementById('resetStoryBtn');
+    const storyTitleEl = document.getElementById('storyTitle');
+    const passageTextEl = document.getElementById('passageText');
+    const completedBadge = document.getElementById('completedBadge');
+    const questionsContainer = document.getElementById('questionsContainer');
+    const statusMsg = document.getElementById('statusMsg');
+    const storyCountSpan = document.getElementById('storyCount');
+    const totalStoriesSpan = document.getElementById('totalStories');
+    const totalScoreSpan = document.getElementById('totalScoreSpan');
+    const prevStoryBtn = document.getElementById('prevStoryBtn');
+    const nextStoryBtn = document.getElementById('nextStoryBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const homeBtn = document.getElementById('homeBtnTop');
+
+    // Helper: speak a short message (can combine multiple lines)
+    function speakMessage(text, lang = 'en') {
+        if (!window.speechSynthesis) return;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = 0.9;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // Helper: speak correct answers for a list of question indices
+    function speakCorrectAnswers(questionIndices) {
+        const questions = getCurrentQuestions();
+        const langCode = currentLanguage === 'en' ? 'en-US' : 'ne-NP';
+        let fullMsg = "";
+        for (let idx of questionIndices) {
+            const q = questions[idx];
+            fullMsg += `For question "${q.text}", the correct answer is: ${q.options[q.correct]}. `;
+        }
+        if (fullMsg) speakMessage(fullMsg, langCode);
+    }
+
+    // Update the submit button text and mode
+    function setSubmitMode(isNextMode) {
+        waitingForNext = isNextMode;
+        if (isNextMode) {
+            submitBtn.innerHTML = "📖 Next Story →";
+            submitBtn.style.background = "#ffb347";
+            submitBtn.style.boxShadow = "0 4px 0 #a45d2a";
+        } else {
+            submitBtn.innerHTML = "✅ Check Answers";
+            submitBtn.style.background = "#56ab7c";
+            submitBtn.style.boxShadow = "0 4px 0 #2e6b49";
+        }
+    }
+
+    // Recalculate total completed stories based on flags
+    function updateTotalCompleted() {
+        totalCompleted = storyCompletedFlags.filter(flag => flag === true).length;
+        totalScoreSpan.innerText = totalCompleted;
+    }
+
+    // Check if current story's answers are all correct
+    function areAllAnswersCorrect() {
+        const questions = getCurrentQuestions();
+        const selections = userSelections[currentStoryIndex];
+        if (!selections) return false;
+        for (let i = 0; i < questions.length; i++) {
+            if (selections[i] !== questions[i].correct) return false;
+        }
+        return true;
+    }
+
+    // Called whenever a radio button changes
+    function onAnswerChange() {
+        if (waitingForNext) {
+            // If button was in "Next Story" mode but answers are no longer all correct, revert
+            if (!areAllAnswersCorrect()) {
+                setSubmitMode(false);
+                // Also update the story completed flag if needed
+                if (storyCompletedFlags[currentStoryIndex]) {
+                    storyCompletedFlags[currentStoryIndex] = false;
+                    updateTotalCompleted();
+                    updateCompletedBadge();
+                }
+            }
+        } else {
+            // If button is in "Check Answers" mode and now all answers become correct, we could auto-switch?
+            // But we let the user click Check Answers to avoid accidental advance. So do nothing.
+        }
+    }
+
+    // Initialize dropdown
+    storiesData.forEach((story, idx) => {
+        const option = document.createElement('option');
+        option.value = idx;
+        option.textContent = `${idx+1}. ${story.title}`;
+        storySelect.appendChild(option);
+    });
+    totalStoriesSpan.innerText = totalStories;
+
+    function getCurrentStory() {
+        return storiesData[currentStoryIndex];
+    }
+
+    function getCurrentPassageText() {
+        const story = getCurrentStory();
+        return currentLanguage === 'en' ? story.enText : story.npText;
+    }
+
+    function getCurrentQuestions() {
+        const story = getCurrentStory();
+        return currentLanguage === 'en' ? story.enQuestions : story.npQuestions;
+    }
+
+    function resetStoryState() {
+        const qLen = getCurrentQuestions().length;
+        questionAttempts[currentStoryIndex] = new Array(qLen).fill(0);
+        userSelections[currentStoryIndex] = new Array(qLen).fill(-1);
+        // If story was marked completed, unmark it (because resetting)
+        if (storyCompletedFlags[currentStoryIndex]) {
+            storyCompletedFlags[currentStoryIndex] = false;
+            updateTotalCompleted();
+        }
+        // Reset button mode to "Check Answers"
+        setSubmitMode(false);
+        updateCompletedBadge();
+    }
+
+    function updateCompletedBadge() {
+        if (storyCompletedFlags[currentStoryIndex]) {
+            completedBadge.style.display = "inline-block";
+        } else {
+            completedBadge.style.display = "none";
+        }
+    }
+
+    function renderStory() {
+        const story = getCurrentStory();
+        storyTitleEl.textContent = story.title;
+        passageTextEl.textContent = getCurrentPassageText();
+        storyCountSpan.innerText = currentStoryIndex + 1;
+        resetStoryState();
+        renderQuestions();
+        statusMsg.innerHTML = `📘 Story ${currentStoryIndex+1}/${totalStories} · ${story.title}`;
+        statusMsg.style.backgroundColor = "#fff0d4";
+        updateCompletedBadge();
+    }
+
+    function renderQuestions() {
+        const questions = getCurrentQuestions();
+        const attempts = questionAttempts[currentStoryIndex];
+        const selections = userSelections[currentStoryIndex];
+        questionsContainer.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question-item';
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.textContent = `${idx+1}. ${q.text}`;
+            qDiv.appendChild(qText);
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            q.options.forEach((opt, optIdx) => {
+                const optLabel = document.createElement('label');
+                optLabel.className = 'option';
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q${idx}`;
+                radio.value = optIdx;
+                radio.checked = (selections && selections[idx] === optIdx);
+                radio.addEventListener('change', (e) => {
+                    userSelections[currentStoryIndex][idx] = parseInt(e.target.value);
+                    onAnswerChange();
+                });
+                optLabel.appendChild(radio);
+                optLabel.appendChild(document.createTextNode(opt));
+                optionsDiv.appendChild(optLabel);
+            });
+            qDiv.appendChild(optionsDiv);
+            if (attempts && attempts[idx] >= 3) {
+                const correctIdx = q.correct;
+                const allOptions = optionsDiv.querySelectorAll('.option');
+                if (allOptions[correctIdx]) {
+                    allOptions[correctIdx].classList.add('highlight-correct');
+                }
+                const hint = document.createElement('div');
+                hint.style.fontSize = '0.8rem';
+                hint.style.color = '#2c8c2c';
+                hint.style.marginTop = '0.5rem';
+                hint.innerHTML = `💡 Correct answer: ${q.options[q.correct]}`;
+                qDiv.appendChild(hint);
+            }
+            questionsContainer.appendChild(qDiv);
+        });
+    }
+
+    function checkAnswers() {
+        if (waitingForNext) {
+            // Go to next story
+            let nextIdx = (currentStoryIndex + 1) % totalStories;
+            storySelect.value = nextIdx;
+            currentStoryIndex = nextIdx;
+            renderStory();
+            return;
+        }
+
+        const questions = getCurrentQuestions();
+        const attempts = questionAttempts[currentStoryIndex];
+        const selections = userSelections[currentStoryIndex];
+        if (!selections) return;
+
+        let allCorrect = true;
+        let newlyHighlighted = [];
+
+        for (let i = 0; i < questions.length; i++) {
+            if (selections[i] !== questions[i].correct) {
+                allCorrect = false;
+                const oldAttempts = attempts[i];
+                attempts[i] = (attempts[i] || 0) + 1;
+                if (oldAttempts < 3 && attempts[i] >= 3) {
+                    newlyHighlighted.push(i);
+                }
+            }
+        }
+
+        // Speak all newly highlighted correct answers together
+        if (newlyHighlighted.length > 0) {
+            speakCorrectAnswers(newlyHighlighted);
+        }
+
+        if (allCorrect) {
+            // If story was not already completed, mark it and update total
+            if (!storyCompletedFlags[currentStoryIndex]) {
+                storyCompletedFlags[currentStoryIndex] = true;
+                updateTotalCompleted();
+                updateCompletedBadge();
+            }
+            const successMsg = currentLanguage === 'en' 
+                ? "Perfect! All answers correct. Click Next Story to continue."
+                : "सबै उत्तर सही छन्। अर्को कथा जान Next Story थिच्नुहोस्।";
+            statusMsg.innerHTML = successMsg;
+            statusMsg.style.backgroundColor = "#d4f5d0";
+            speakMessage(successMsg, currentLanguage === 'en' ? 'en-US' : 'ne-NP');
+            setSubmitMode(true);
+        } else {
+            // If story was previously completed, unmark it now
+            if (storyCompletedFlags[currentStoryIndex]) {
+                storyCompletedFlags[currentStoryIndex] = false;
+                updateTotalCompleted();
+                updateCompletedBadge();
+            }
+            const failMsg = currentLanguage === 'en'
+                ? "Some answers are incorrect. Please read the story again. After 3 wrong attempts, the correct answer will be highlighted and spoken."
+                : "केही उत्तर गलत छन्। कृपया कथा फेरि पढ्नुहोस्। तीन पटक गलत प्रयासपछि सही उत्तर हाइलाइट हुनेछ र सुनाइनेछ।";
+            statusMsg.innerHTML = failMsg;
+            statusMsg.style.backgroundColor = "#ffe0cc";
+            speakMessage(failMsg, currentLanguage === 'en' ? 'en-US' : 'ne-NP');
+            renderQuestions(); // re-render to show highlights
+            setSubmitMode(false);
+        }
+    }
+
+    function changeStory(index) {
+        currentStoryIndex = index;
+        storySelect.value = index;
+        renderStory();
+    }
+
+    function nextStoryManual() {
+        let next = (currentStoryIndex + 1) % totalStories;
+        changeStory(next);
+    }
+    function prevStoryManual() {
+        let prev = (currentStoryIndex - 1 + totalStories) % totalStories;
+        changeStory(prev);
+    }
+
+    function onLanguageChange() {
+        currentLanguage = languageSelect.value;
+        renderStory();
+    }
+
+    function onStorySelect() {
+        let idx = parseInt(storySelect.value);
+        changeStory(idx);
+    }
+
+    function readPassageAloud() {
+        if (!speechEnabled) {
+            const msg = "Speech is OFF. Please turn it ON using the toggle button.";
+            statusMsg.innerHTML = msg;
+            speakMessage(msg, 'en-US');
+            setTimeout(() => { if(statusMsg.innerHTML === msg) statusMsg.innerHTML = `📘 Story ${currentStoryIndex+1}/${totalStories} · ${getCurrentStory().title}`; }, 2000);
+            return;
+        }
+        const text = getCurrentPassageText();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = currentLanguage === 'en' ? 'en-US' : 'ne-NP';
+        utterance.rate = 0.9;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function toggleSpeech() {
+        speechEnabled = !speechEnabled;
+        speechToggleBtn.innerHTML = speechEnabled ? "🔊 ON" : "🔇 OFF";
+        speechToggleBtn.style.background = speechEnabled ? "#56ab7c" : "#ffb347";
+        const msg = speechEnabled 
+            ? "Speech enabled. Click 'Read Aloud' to hear the story."
+            : "Speech disabled.";
+        statusMsg.innerHTML = msg;
+        speakMessage(msg, 'en-US');
+        setTimeout(() => { if(statusMsg.innerHTML === msg) statusMsg.innerHTML = `📘 Story ${currentStoryIndex+1}/${totalStories} · ${getCurrentStory().title}`; }, 1500);
+    }
+
+    function resetCurrentStory() {
+        resetStoryState();
+        renderQuestions();
+        statusMsg.innerHTML = `🔄 Story reset. All attempts cleared.`;
+        setTimeout(() => statusMsg.innerHTML = `📘 Story ${currentStoryIndex+1}/${totalStories} · ${getCurrentStory().title}`, 1500);
+    }
+
+    // Event listeners
+    homeBtn.addEventListener('click', () => window.location.href = 'index.html');
+    languageSelect.addEventListener('change', onLanguageChange);
+    storySelect.addEventListener('change', onStorySelect);
+    prevStoryBtn.addEventListener('click', prevStoryManual);
+    nextStoryBtn.addEventListener('click', nextStoryManual);
+    submitBtn.addEventListener('click', checkAnswers);
+    readBtn.addEventListener('click', readPassageAloud);
+    speechToggleBtn.addEventListener('click', toggleSpeech);
+    resetStoryBtn.addEventListener('click', resetCurrentStory);
+
+    // Initialize arrays
+    for (let i = 0; i < totalStories; i++) {
+        questionAttempts[i] = new Array(storiesData[i].enQuestions.length).fill(0);
+        userSelections[i] = new Array(storiesData[i].enQuestions.length).fill(-1);
+    }
+    renderStory();
+    updateTotalCompleted();
+    setSubmitMode(false);
+</script>
+</body>
+</html>

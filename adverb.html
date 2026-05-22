@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Adverb Master | English ↔ Nepali | 9 Types of Adverbs</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1f6d7a 0%, #0e4b57 100%);
+            font-family: 'Comic Neue', 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI Emoji', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-container {
+            max-width: 1400px;
+            width: 100%;
+            background: #fffaf0;
+            border-radius: 4rem 4rem 3rem 3rem;
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.8);
+            padding: 1.2rem 1.5rem 2rem;
+            position: relative;
+        }
+
+        .home-btn-top {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.2rem;
+            background: #ff8c5a;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 8px 18px;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: transform 0.08s linear, background 0.2s;
+            color: white;
+            box-shadow: 0 4px 0 #c25a2a;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 20;
+            text-decoration: none;
+        }
+
+        .home-btn-top:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #c25a2a;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin: 0.5rem 0 0.25rem;
+            background: linear-gradient(120deg, #3a7ca5, #1d5a7a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            font-weight: 800;
+            padding-top: 0.5rem;
+        }
+
+        .subhead {
+            text-align: center;
+            font-weight: bold;
+            background: #fff0cf;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 1rem;
+            padding: 0.4rem 1.5rem;
+            border-radius: 3rem;
+            font-size: 0.9rem;
+            color: #d66b2d;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #f7e9cf;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4rem;
+            margin-bottom: 1.8rem;
+            gap: 12px;
+            margin-top: 0.5rem;
+        }
+
+        .score-panel {
+            background: #2e5c4a;
+            padding: 0.3rem 1rem;
+            border-radius: 3rem;
+            color: #f9eec1;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: inset 0 -1px 0 #3d7860, 0 4px 0 #1f3e32;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .score-item {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.3rem;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: #f7b32b;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding: 8px 18px;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: transform 0.08s linear;
+            color: #2d2b1f;
+            box-shadow: 0 4px 0 #a45d2a;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #a45d2a;
+        }
+
+        .reset-btn {
+            background: #6c9ebf;
+            color: white;
+            box-shadow: 0 4px 0 #3e607a;
+        }
+
+        .page-btn {
+            background: #56ab7c;
+            color: white;
+            box-shadow: 0 4px 0 #2e6b49;
+        }
+
+        .adv-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff5e6;
+            padding: 0.2rem 1rem;
+            border-radius: 3rem;
+            flex-wrap: wrap;
+            flex-shrink: 1;
+            min-width: 0;
+        }
+
+        .adv-selector label {
+            font-weight: bold;
+            color: #b45f2b;
+            white-space: nowrap;
+        }
+
+        select {
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+            border: none;
+            background: #ffefcd;
+            cursor: pointer;
+            outline: none;
+            max-width: 100%;
+            text-overflow: ellipsis;
+        }
+
+        .message-box {
+            background: #fff0d4;
+            border-radius: 2.5rem;
+            padding: 0.4rem 1rem;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-align: center;
+            color: #bf5e1a;
+            flex-shrink: 1;
+            min-width: 150px;
+        }
+
+        .match-zone {
+            position: relative;
+            display: flex;
+            gap: 2rem;
+            background: #fffbe6;
+            border-radius: 3rem;
+            padding: 2rem 1rem;
+            margin-top: 0.5rem;
+            box-shadow: inset 0 0 0 3px white, 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .column h3 {
+            text-align: center;
+            font-size: 1.6rem;
+            margin: 0 0 0.2rem;
+            color: #e58734;
+            background: #ffefcd;
+            width: fit-content;
+            padding: 0.2rem 1.2rem;
+            border-radius: 3rem;
+            align-self: center;
+        }
+
+        .word-card {
+            background: white;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 4rem;
+            cursor: pointer;
+            transition: all 0.12s;
+            box-shadow: 0 8px 0 #c0a16b;
+            border: 2px solid #ffd995;
+            position: relative;
+            min-height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 0.5rem;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        .eng-card {
+            background: #d9effa;
+            color: #004b6e;
+            border-left: 10px solid #3a86ff;
+        }
+
+        .nep-card {
+            background: #fff0cf;
+            color: #8b5a2b;
+            border-right: 10px solid #f5b85b;
+            font-size: 1.2rem;
+        }
+
+        .word-card.selected {
+            background: #fff0a3;
+            transform: scale(0.97);
+            box-shadow: 0 4px 0 #b87c2e;
+        }
+
+        .word-card.matched {
+            background: #a7d0a7;
+            opacity: 0.9;
+            cursor: default;
+            box-shadow: 0 4px 0 #5b784e;
+            pointer-events: none;
+        }
+
+        .word-card.matched::after {
+            content: " ✓";
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #1b6b1b;
+            display: inline-block;
+            margin-left: 6px;
+        }
+
+        .line-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .match-line {
+            stroke: #289b48;
+            stroke-width: 5;
+            stroke-linecap: round;
+            filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 1.2rem;
+            font-weight: bold;
+            color: #966f3a;
+            background: #fff2df;
+            width: fit-content;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 720px) {
+            .game-container { padding: 1rem; }
+            .home-btn-top {
+                position: relative;
+                top: auto;
+                left: auto;
+                display: inline-flex;
+                margin: 0 0 0.8rem 0;
+                width: fit-content;
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+            .home-wrapper {
+                display: flex;
+                justify-content: flex-start;
+                margin-bottom: 0.5rem;
+            }
+            h1 { font-size: 1.5rem; margin-top: 0.2rem; padding-top: 0; }
+            .word-card { font-size: 1rem; min-height: 70px; padding: 0.5rem 0.2rem; }
+            .nep-card { font-size: 0.9rem; }
+            .column h3 { font-size: 1.2rem; }
+            button { padding: 5px 12px; font-size: 0.7rem; }
+            .match-zone { gap: 1rem; }
+            .column { gap: 1rem; }
+            .word-card.matched::after { font-size: 1rem; }
+            .score-panel { font-size: 0.9rem; }
+            .top-bar { flex-direction: column; align-items: stretch; margin-top: 0; }
+            .adv-selector { justify-content: space-between; }
+            .nav-buttons { justify-content: center; }
+            .message-box { text-align: center; }
+            select { font-size: 0.8rem; padding: 0.2rem 0.5rem; }
+        }
+
+        @media (min-width: 721px) {
+            .home-wrapper {
+                display: block;
+                position: relative;
+            }
+            .home-btn-top {
+                position: absolute;
+                top: 1.2rem;
+                left: 1.2rem;
+            }
+            h1 {
+                margin-top: 0.5rem;
+                padding-top: 0.5rem;
+            }
+        }
+
+        .wrong-flash {
+            animation: shakeFlash 0.3s ease;
+        }
+        @keyframes shakeFlash {
+            0% { background-color: #ffc2c2; transform: translateX(0);}
+            30% { transform: translateX(-4px);}
+            70% { transform: translateX(4px);}
+            100% { background-color: inherit; transform: translateX(0);}
+        }
+    </style>
+</head>
+<body>
+<div class="game-container" id="gameApp">
+    <div class="home-wrapper">
+        <button id="homeBtnTop" class="home-btn-top">🏠 HOME</button>
+    </div>
+
+    <h1>🎯 ADVERB MASTER</h1>
+    <div style="text-align: center;"><span class="subhead">🎧 9 adverb types • Match English ↔ Nepali • Tap to speak 🎧</span></div>
+
+    <div class="top-bar">
+        <div class="score-panel">
+            <div class="score-item">🏆 PAGE: <span id="matchCount">0</span> / <span id="totalCount">5</span></div>
+            <div class="score-item">🌟 TOTAL: <span id="totalScoreSpan">0</span></div>
+        </div>
+        <div class="adv-selector">
+            <label>📚 ADVERB TYPE:</label>
+            <select id="advTypeSelect">
+                <option value="0">🎭 Manner (ढङ्ग)</option>
+                <option value="1">📍 Place (स्थान)</option>
+                <option value="2">⏰ Time (समय)</option>
+                <option value="3">🔄 Frequency (बारम्बारता)</option>
+                <option value="4">⚖️ Degree (परिमाण)</option>
+                <option value="5">💡 Reason/Purpose (कारण)</option>
+                <option value="6">❓ Interrogative (प्रश्नात्मक)</option>
+                <option value="7">🔗 Relative (सम्बन्धात्मक)</option>
+                <option value="8">➕ Conjunctive (संयोजक)</option>
+            </select>
+        </div>
+        <div class="nav-buttons">
+            <button id="prevPageBtn" class="page-btn">◀ PREV</button>
+            <button id="resetBtn" class="reset-btn">🔄 RESET PAGE</button>
+            <button id="nextPageBtn" class="page-btn">NEXT ▶</button>
+        </div>
+        <div class="message-box" id="statusMsg">✨ Pick an adverb type, then match!</div>
+    </div>
+
+    <div id="matchArea" class="match-zone">
+        <div class="column">
+            <h3>🇬🇧 ENGLISH</h3>
+            <div id="englishList" class="verb-list"></div>
+        </div>
+        <div class="column">
+            <h3>🇳🇵 NEPALI</h3>
+            <div id="nepaliList" class="verb-list"></div>
+        </div>
+        <div id="lineLayer" class="line-overlay"></div>
+    </div>
+    <div class="footer-note">
+        💡 Click any word → speaks aloud. Match correct pairs. ✅ Check mark + green line = correct! Total score never resets.
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // ADVERB DATA: 9 TYPES, each with 10-20 examples (2+ pages of 5)
+    // Format: { eng: "English adverb", nep: "नेपाली" }
+    // --------------------------------------------------------------
+
+    // 0. Manner (20 items)
+    const mannerList = [
+        { eng: "slowly", nep: "बिस्तारै" }, { eng: "happily", nep: "खुशीसाथ" }, { eng: "carefully", nep: "सावधानीपूर्वक" },
+        { eng: "quickly", nep: "छिटो" }, { eng: "beautifully", nep: "सुन्दर रूपमा" }, { eng: "loudly", nep: "ठूलो स्वरमा" },
+        { eng: "quietly", nep: "चुपचाप" }, { eng: "easily", nep: "सजिलै" }, { eng: "badly", nep: "नराम्ररी" },
+        { eng: "well", nep: "राम्रोसँग" }, { eng: "gracefully", nep: "शालीनतापूर्वक" }, { eng: "kindly", nep: "दयालुतापूर्वक" },
+        { eng: "politely", nep: "विनम्रतापूर्वक" }, { eng: "suddenly", nep: "अचानक" }, { eng: "angrily", nep: "रिसले" },
+        { eng: "cheerfully", nep: "उल्लासपूर्वक" }, { eng: "nervously", nep: "घबराएर" }, { eng: "proudly", nep: "गर्वसाथ" },
+        { eng: "sadly", nep: "दुखी हुँदै" }, { eng: "honestly", nep: "इमानदारीपूर्वक" }
+    ];
+
+    // 1. Place (14 items)
+    const placeList = [
+        { eng: "here", nep: "यहाँ" }, { eng: "there", nep: "त्यहाँ" }, { eng: "everywhere", nep: "सबैतिर" },
+        { eng: "anywhere", nep: "जताततै" }, { eng: "nowhere", nep: "कतै पनि छैन" }, { eng: "inside", nep: "भित्र" },
+        { eng: "outside", nep: "बाहिर" }, { eng: "upstairs", nep: "माथिल्लो तल्ला" }, { eng: "downstairs", nep: "तल्लो तल्ला" },
+        { eng: "nearby", nep: "नजिकै" }, { eng: "far", nep: "टाढा" }, { eng: "abroad", nep: "विदेश" },
+        { eng: "home", nep: "घर" }, { eng: "underground", nep: "भूमिगत" }
+    ];
+
+    // 2. Time (20 items)
+    const timeList = [
+        { eng: "now", nep: "अहिले" }, { eng: "yesterday", nep: "हिजो" }, { eng: "tomorrow", nep: "भोलि" },
+        { eng: "today", nep: "आज" }, { eng: "soon", nep: "चाँडै" }, { eng: "later", nep: "पछि" },
+        { eng: "early", nep: "चाँडै" }, { eng: "late", nep: "ढिलो" }, { eng: "already", nep: "पहिले नै" },
+        { eng: "recently", nep: "हालै" }, { eng: "immediately", nep: "तुरुन्तै" }, { eng: "finally", nep: "अन्ततः" },
+        { eng: "before", nep: "पहिले" }, { eng: "after", nep: "पछि" }, { eng: "currently", nep: "हाल" },
+        { eng: "previously", nep: "पहिले" }, { eng: "eventually", nep: "अन्ततः" }, { eng: "yet", nep: "अझै" },
+        { eng: "since", nep: "देखि" }, { eng: "until", nep: "सम्म" }
+    ];
+
+    // 3. Frequency (16 items)
+    const frequencyList = [
+        { eng: "always", nep: "सधैं" }, { eng: "often", nep: "प्रायः" }, { eng: "sometimes", nep: "कहिलेकाहीँ" },
+        { eng: "never", nep: "कहिल्यै" }, { eng: "rarely", nep: "विरलै" }, { eng: "usually", nep: "सामान्यतया" },
+        { eng: "frequently", nep: "बारम्बार" }, { eng: "occasionally", nep: "कहिलेकाँही" }, { eng: "seldom", nep: "कहिलेकाँही मात्र" },
+        { eng: "constantly", nep: "निरन्तर" }, { eng: "regularly", nep: "नियमित रूपमा" }, { eng: "annually", nep: "वार्षिक" },
+        { eng: "daily", nep: "दैनिक" }, { eng: "monthly", nep: "मासिक" }, { eng: "weekly", nep: "साप्ताहिक" },
+        { eng: "hourly", nep: "प्रति घण्टा" }
+    ];
+
+    // 4. Degree (20 items)
+    const degreeList = [
+        { eng: "very", nep: "धेरै" }, { eng: "too", nep: "अति" }, { eng: "quite", nep: "एकदम" },
+        { eng: "almost", nep: "लगभग" }, { eng: "extremely", nep: "अत्यन्त" }, { eng: "highly", nep: "उच्च रूपमा" },
+        { eng: "deeply", nep: "गहिरो रूपमा" }, { eng: "completely", nep: "पूर्ण रूपमा" }, { eng: "totally", nep: "पूर्णतया" },
+        { eng: "absolutely", nep: "निश्चित रूपमा" }, { eng: "hardly", nep: "मुस्किलले" }, { eng: "scarcely", nep: "विरलै" },
+        { eng: "nearly", nep: "लगभग" }, { eng: "barely", nep: "मात्र" }, { eng: "entirely", nep: "सम्पूर्ण रूपमा" },
+        { eng: "fully", nep: "पूर्णतया" }, { eng: "partially", nep: "आंशिक रूपमा" }, { eng: "somewhat", nep: "केही हदसम्म" },
+        { eng: "significantly", nep: "उल्लेखनीय रूपमा" }, { eng: "slightly", nep: "थोरै" }
+    ];
+
+    // 5. Reason/Purpose (10 items)
+    const reasonList = [
+        { eng: "therefore", nep: "त्यसैले" }, { eng: "hence", nep: "अतः" }, { eng: "so", nep: "यसर्थ" },
+        { eng: "thus", nep: "यसरी" }, { eng: "consequently", nep: "फलस्वरूप" }, { eng: "accordingly", nep: "तदनुसार" },
+        { eng: "for this reason", nep: "यस कारणले" }, { eng: "as a result", nep: "परिणाम स्वरूप" }, { eng: "because of that", nep: "त्यसको कारणले" },
+        { eng: "thereby", nep: "त्यस मार्फत" }
+    ];
+
+    // 6. Interrogative (12 items)
+    const interrogativeList = [
+        { eng: "why", nep: "किन" }, { eng: "when", nep: "कहिले" }, { eng: "where", nep: "कहाँ" },
+        { eng: "how", nep: "कसरी" }, { eng: "how much", nep: "कति" }, { eng: "how many", nep: "कति (गणनीय)" },
+        { eng: "how often", nep: "कति पटक" }, { eng: "how long", nep: "कति लामो" }, { eng: "how far", nep: "कति टाढा" },
+        { eng: "wherever", nep: "जहाँसुकै" }, { eng: "whenever", nep: "जहिले पनि" }, { eng: "however", nep: "जसरी भए पनि" }
+    ];
+
+    // 7. Relative (12 items)
+    const relativeList = [
+        { eng: "where", nep: "जहाँ" }, { eng: "when", nep: "जब" }, { eng: "why", nep: "जसको कारणले" },
+        { eng: "wherever", nep: "जहाँसुकै" }, { eng: "whenever", nep: "जहिले पनि" }, { eng: "however", nep: "जसरी भए पनि" },
+        { eng: "how", nep: "जसरी" }, { eng: "that (as relative adverb)", nep: "जुन" }, { eng: "the way", nep: "जुन तरिकाले" },
+        { eng: "as", nep: "जस्तै" }, { eng: "so long as", nep: "जबसम्म" }, { eng: "in which", nep: "जसमा" }
+    ];
+
+    // 8. Conjunctive (16 items)
+    const conjunctiveList = [
+        { eng: "however", nep: "तथापि" }, { eng: "moreover", nep: "यसबाहेक" }, { eng: "nevertheless", nep: "तैपनि" },
+        { eng: "consequently", nep: "फलस्वरूप" }, { eng: "therefore", nep: "त्यसैले" }, { eng: "meanwhile", nep: "यसै बीचमा" },
+        { eng: "otherwise", nep: "अन्यथा" }, { eng: "furthermore", nep: "थप रूपमा" }, { eng: "accordingly", nep: "तदनुसार" },
+        { eng: "in addition", nep: "साथै" }, { eng: "for example", nep: "उदाहरणको लागि" }, { eng: "similarly", nep: "त्यसैगरी" },
+        { eng: "on the other hand", nep: "अर्कोतर्फ" }, { eng: "thus", nep: "यसरी" }, { eng: "hence", nep: "अतः" },
+        { eng: "instead", nep: "बरु" }
+    ];
+
+    // Combine all categories into an array
+    const adverbCategories = [
+        { name: "Adverb of Manner", list: mannerList },
+        { name: "Adverb of Place", list: placeList },
+        { name: "Adverb of Time", list: timeList },
+        { name: "Adverb of Frequency", list: frequencyList },
+        { name: "Adverb of Degree", list: degreeList },
+        { name: "Adverb of Reason/Purpose", list: reasonList },
+        { name: "Interrogative Adverb", list: interrogativeList },
+        { name: "Relative Adverb", list: relativeList },
+        { name: "Conjunctive Adverb", list: conjunctiveList }
+    ];
+
+    const PER_PAGE = 5;
+    let currentCategory = 0;
+    let currentPages = [];
+    let currentPageIdx = 0;
+    let currentPageAdverbs = null;
+    let shuffledEnglish = [];
+    let shuffledNepali = [];
+    let matchedPairs = [];
+    let selectedCard = null;
+    let totalInPage = 5;
+    let globalTotalScore = 0;
+
+    // DOM elements
+    const englishDiv = document.getElementById('englishList');
+    const nepaliDiv = document.getElementById('nepaliList');
+    const matchCountSpan = document.getElementById('matchCount');
+    const totalCountSpan = document.getElementById('totalCount');
+    const totalScoreSpan = document.getElementById('totalScoreSpan');
+    const statusDiv = document.getElementById('statusMsg');
+    const lineLayer = document.getElementById('lineLayer');
+    const advSelect = document.getElementById('advTypeSelect');
+    const prevBtn = document.getElementById('prevPageBtn');
+    const nextBtn = document.getElementById('nextPageBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const homeBtnTop = document.getElementById('homeBtnTop');
+
+    function updateGlobalTotalDisplay() { totalScoreSpan.innerText = globalTotalScore; }
+
+    homeBtnTop.addEventListener('click', () => { window.location.href = 'index.html'; });
+
+    // Speech & sound
+    function speakText(text, lang) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+    }
+    let audioContext = null;
+    function getAudioContext() {
+        if (audioContext) return audioContext;
+        try { audioContext = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { return null; }
+        return audioContext;
+    }
+    function playSoftBeep() {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        if (ctx.state === 'suspended') ctx.resume();
+        try {
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.value = 1000;
+            gain.gain.value = 0.12;
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+            osc.stop(now + 0.2);
+        } catch(e) {}
+    }
+    function playBuzz() {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        if (ctx.state === 'suspended') ctx.resume();
+        try {
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sawtooth';
+            osc.frequency.value = 490;
+            gain.gain.value = 0.35;
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, now + 0.35);
+            osc.stop(now + 0.35);
+        } catch(e) {}
+    }
+
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function buildShuffledColumns(itemsArr) {
+        const engItems = itemsArr.map((item, idx) => ({ text: item.eng, pairId: idx }));
+        const nepItems = itemsArr.map((item, idx) => ({ text: item.nep, pairId: idx }));
+        return { engShuffled: shuffle([...engItems]), nepShuffled: shuffle([...nepItems]) };
+    }
+
+    function clearLines() { lineLayer.innerHTML = ''; }
+    function clearSelection() {
+        if (selectedCard && selectedCard.element) selectedCard.element.classList.remove('selected');
+        selectedCard = null;
+    }
+
+    function drawMatchLines() {
+        clearLines();
+        if (matchedPairs.length === 0) return;
+        const container = document.getElementById('matchArea');
+        const containerRect = container.getBoundingClientRect();
+        if (containerRect.width === 0) return;
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "100%");
+        svg.style.position = "absolute";
+        svg.style.top = "0";
+        svg.style.left = "0";
+        for (let pair of matchedPairs) {
+            const engRect = pair.engEl.getBoundingClientRect();
+            const nepRect = pair.nepEl.getBoundingClientRect();
+            const startX = engRect.right - containerRect.left - 5;
+            const startY = (engRect.top + engRect.bottom) / 2 - containerRect.top;
+            const endX = nepRect.left - containerRect.left + 5;
+            const endY = (nepRect.top + nepRect.bottom) / 2 - containerRect.top;
+            const line = document.createElementNS(svgNS, "line");
+            line.setAttribute("x1", startX);
+            line.setAttribute("y1", startY);
+            line.setAttribute("x2", endX);
+            line.setAttribute("y2", endY);
+            line.classList.add("match-line");
+            svg.appendChild(line);
+        }
+        lineLayer.appendChild(svg);
+    }
+
+    function updateScoreUI() {
+        matchCountSpan.innerText = matchedPairs.length;
+        if (matchedPairs.length === totalInPage) {
+            statusDiv.innerHTML = "🎉 PERFECT! All matched! Go to next page 🎉";
+            statusDiv.style.backgroundColor = "#d4f5d0";
+        } else {
+            statusDiv.style.backgroundColor = "#fff0d4";
+        }
+    }
+
+    function attemptMatch(newType, newElement, newPairId) {
+        if (!selectedCard) return false;
+        const { type: selType, element: selEl, pairId: selPair } = selectedCard;
+        if ((selType === 'eng' && newType === 'nep') || (selType === 'nep' && newType === 'eng')) {
+            if (selPair === newPairId) {
+                if (selEl.classList.contains('matched') || newElement.classList.contains('matched')) {
+                    statusDiv.innerHTML = "⛔ Already matched! Pick a new word.";
+                    clearSelection();
+                    return false;
+                }
+                selEl.classList.add('matched');
+                newElement.classList.add('matched');
+                matchedPairs.push({ engEl: selType === 'eng' ? selEl : newElement, nepEl: selType === 'nep' ? selEl : newElement, pairId: selPair });
+                globalTotalScore++;
+                updateGlobalTotalDisplay();
+                updateScoreUI();
+                drawMatchLines();
+                clearSelection();
+                return true;
+            } else {
+                playBuzz();
+                [selEl, newElement].forEach(el => {
+                    el.classList.add('wrong-flash');
+                    setTimeout(() => el.classList.remove('wrong-flash'), 300);
+                });
+                statusDiv.innerHTML = "❌ Wrong match! Listen to buzzer, try again ❌";
+                clearSelection();
+                return false;
+            }
+        } else {
+            clearSelection();
+            if (!newElement.classList.contains('matched')) {
+                selectedCard = { type: newType, element: newElement, pairId: newPairId };
+                newElement.classList.add('selected');
+                statusDiv.innerHTML = `👉 Selected: ${newElement.innerText} → now pick from the opposite column.`;
+            }
+            return false;
+        }
+    }
+
+    function handleCardClick(e) {
+        const card = e.target.closest('.word-card');
+        if (!card) return;
+        if (card.classList.contains('matched')) {
+            statusDiv.innerHTML = "🔒 Already matched! Choose a different word.";
+            return;
+        }
+        const cardType = card.getAttribute('data-type');
+        const pairId = parseInt(card.getAttribute('data-pairid'));
+        const wordText = card.innerText.trim();
+        if (cardType === 'eng') speakText(wordText, 'en-US');
+        else speakText(wordText, 'ne-NP');
+        playSoftBeep();
+        if (isNaN(pairId)) return;
+        if (!selectedCard) {
+            clearSelection();
+            selectedCard = { type: cardType, element: card, pairId };
+            card.classList.add('selected');
+            statusDiv.innerHTML = `✨ Selected: ${wordText} → now match with opposite side ✨`;
+            return;
+        }
+        attemptMatch(cardType, card, pairId);
+    }
+
+    function renderCurrentPage() {
+        if (!currentPageAdverbs) return;
+        clearSelection();
+        matchedPairs = [];
+        clearLines();
+        totalInPage = currentPageAdverbs.length;
+        totalCountSpan.innerText = totalInPage;
+        updateScoreUI();
+        const { engShuffled, nepShuffled } = buildShuffledColumns(currentPageAdverbs);
+        shuffledEnglish = engShuffled;
+        shuffledNepali = nepShuffled;
+        englishDiv.innerHTML = '';
+        shuffledEnglish.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card eng-card';
+            card.textContent = item.text;
+            card.setAttribute('data-type', 'eng');
+            card.setAttribute('data-pairid', item.pairId);
+            englishDiv.appendChild(card);
+        });
+        nepaliDiv.innerHTML = '';
+        shuffledNepali.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card nep-card';
+            card.textContent = item.text;
+            card.setAttribute('data-type', 'nep');
+            card.setAttribute('data-pairid', item.pairId);
+            nepaliDiv.appendChild(card);
+        });
+        const catName = adverbCategories[currentCategory].name;
+        statusDiv.innerHTML = `📘 ${catName} · Page ${currentPageIdx+1}/${currentPages.length} · Tap words to match!`;
+        statusDiv.style.backgroundColor = "#fff0d4";
+    }
+
+    function loadCategory(categoryIndex) {
+        currentCategory = categoryIndex;
+        const fullSet = adverbCategories[currentCategory].list;
+        const pages = [];
+        for (let i = 0; i < fullSet.length; i += PER_PAGE) {
+            pages.push(fullSet.slice(i, i + PER_PAGE));
+        }
+        currentPages = pages;
+        currentPageIdx = 0;
+        currentPageAdverbs = currentPages[0];
+        renderCurrentPage();
+    }
+
+    function nextPage() {
+        if (currentPageIdx + 1 < currentPages.length) {
+            currentPageIdx++;
+            currentPageAdverbs = currentPages[currentPageIdx];
+            renderCurrentPage();
+        } else {
+            statusDiv.innerHTML = "📖 You're on the last page of this adverb type!";
+        }
+    }
+    function prevPage() {
+        if (currentPageIdx - 1 >= 0) {
+            currentPageIdx--;
+            currentPageAdverbs = currentPages[currentPageIdx];
+            renderCurrentPage();
+        } else {
+            statusDiv.innerHTML = "🌟 This is the first page!";
+        }
+    }
+    function resetCurrentPage() {
+        if (currentPageAdverbs) renderCurrentPage();
+        statusDiv.innerHTML = "🔄 Page reset! Both columns shuffled. Total score remains.";
+    }
+
+    const matchZone = document.getElementById('matchArea');
+    matchZone.addEventListener('click', handleCardClick);
+    prevBtn.addEventListener('click', prevPage);
+    nextBtn.addEventListener('click', nextPage);
+    resetBtn.addEventListener('click', resetCurrentPage);
+    advSelect.addEventListener('change', (e) => loadCategory(parseInt(e.target.value)));
+    window.addEventListener('resize', () => setTimeout(drawMatchLines, 30));
+    new ResizeObserver(() => drawMatchLines()).observe(matchZone);
+
+    updateGlobalTotalDisplay();
+    loadCategory(0);
+</script>
+</body>
+</html>
