@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Verb Match: English ↔ Nepali | Speak & Learn</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1f6d7a 0%, #0e4b57 100%);
+            font-family: 'Comic Neue', 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI Emoji', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-container {
+            max-width: 1400px;
+            width: 100%;
+            background: #fffaf0;
+            border-radius: 4rem 4rem 3rem 3rem;
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.3), inset 0 1px 4px rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+            padding: 1.2rem 1.5rem 2rem;
+            transition: all 0.2s ease;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin: 0 0 0.25rem;
+            color: #ffcd7e;
+            text-shadow: 4px 4px 0 #b45f2b;
+            letter-spacing: 1px;
+        }
+
+        .subhead {
+            text-align: center;
+            font-weight: bold;
+            background: #fff0cf;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 1rem;
+            padding: 0.4rem 1.5rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            color: #d66b2d;
+            box-shadow: inset 0 1px 3px #0001, 0 2px 5px #fffa;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #f7e9cf;
+            padding: 0.6rem 1.5rem;
+            border-radius: 4rem;
+            margin-bottom: 1.8rem;
+            gap: 12px;
+        }
+
+        .score-panel {
+            background: #2e5c4a;
+            padding: 0.4rem 1.2rem;
+            border-radius: 3rem;
+            color: #f9eec1;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: inset 0 -1px 0 #3d7860, 0 4px 0 #1f3e32;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: #f7b32b;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 8px 18px;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: transform 0.08s linear;
+            color: #2d2b1f;
+            box-shadow: 0 4px 0 #a45d2a;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #a45d2a;
+        }
+
+        .reset-btn {
+            background: #6c9ebf;
+            color: white;
+            box-shadow: 0 4px 0 #3e607a;
+        }
+
+        .page-btn {
+            background: #56ab7c;
+            color: white;
+            box-shadow: 0 4px 0 #2e6b49;
+        }
+
+        .message-box {
+            background: #fff0d4;
+            border-radius: 2.5rem;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+            color: #bf5e1a;
+        }
+
+        .match-zone {
+            position: relative;
+            display: flex;
+            gap: 2rem;
+            background: #fffbe6;
+            border-radius: 3rem;
+            padding: 2rem 1rem;
+            margin-top: 0.5rem;
+            box-shadow: inset 0 0 0 3px white, 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .column h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin: 0 0 0.5rem;
+            color: #e58734;
+            background: #ffefcd;
+            width: fit-content;
+            padding: 0.2rem 1.6rem;
+            border-radius: 3rem;
+            align-self: center;
+        }
+
+        .word-card {
+            background: white;
+            padding: 1rem 0.5rem;
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: bold;
+            border-radius: 5rem;
+            cursor: pointer;
+            transition: all 0.12s;
+            box-shadow: 0 8px 0 #c0a16b;
+            border: 2px solid #ffd995;
+            position: relative;
+        }
+
+        .eng-card {
+            background: #d9effa;
+            color: #004b6e;
+            border-left: 12px solid #3a86ff;
+        }
+
+        .nep-card {
+            background: #fff0cf;
+            color: #8b5a2b;
+            font-size: 1.5rem;
+            border-right: 12px solid #f5b85b;
+        }
+
+        .word-card.selected {
+            background: #fff0a3;
+            transform: scale(0.97);
+            box-shadow: 0 4px 0 #b87c2e;
+        }
+
+        /* matched style: NO strikethrough, only check mark */
+        .word-card.matched {
+            background: #a7d0a7;
+            opacity: 0.9;
+            cursor: default;
+            box-shadow: 0 4px 0 #5b784e;
+            pointer-events: none;
+        }
+
+        /* check mark only - no line-through */
+        .word-card.matched::after {
+            content: " ✓";
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1b6b1b;
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        /* SVG line overlay */
+        .line-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .match-line {
+            stroke: #289b48;
+            stroke-width: 5;
+            stroke-linecap: round;
+            filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-weight: bold;
+            color: #966f3a;
+            background: #fff2df;
+            width: fit-content;
+            padding: 0.4rem 1.2rem;
+            border-radius: 3rem;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 720px) {
+            .game-container {
+                padding: 1rem;
+            }
+            .word-card {
+                font-size: 1.2rem;
+                padding: 0.7rem 0.2rem;
+            }
+            .nep-card {
+                font-size: 1.1rem;
+            }
+            .column h3 {
+                font-size: 1.4rem;
+            }
+            button {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+            .match-zone {
+                gap: 1rem;
+            }
+            .column {
+                gap: 1.2rem;
+            }
+            .word-card.matched::after {
+                font-size: 1.2rem;
+            }
+        }
+
+        .wrong-flash {
+            animation: shakeFlash 0.3s ease;
+        }
+        @keyframes shakeFlash {
+            0% { background-color: #ffc2c2; transform: translateX(0);}
+            30% { transform: translateX(-5px);}
+            70% { transform: translateX(5px);}
+            100% { background-color: inherit; transform: translateX(0);}
+        }
+    </style>
+</head>
+<body>
+<div class="game-container" id="gameApp">
+    <h1>🔊 VERB MATCH • अंग्रेजी ↔ नेपाली</h1>
+    <div style="text-align: center;"><span class="subhead">✨ Tap any word → it speaks! Match to learn ✨</span></div>
+
+    <div class="top-bar">
+        <div class="score-panel">🏆 SCORE: <span id="matchCount">0</span> / <span id="totalCount">5</span></div>
+        <div class="nav-buttons">
+            <button id="prevPageBtn" class="page-btn">◀ PREV</button>
+            <button id="resetBtn" class="reset-btn">🔄 RESET</button>
+            <button id="nextPageBtn" class="page-btn">NEXT ▶</button>
+        </div>
+        <div class="message-box" id="statusMsg">✨ Tap a word to hear it, then match!</div>
+    </div>
+
+    <div id="matchArea" class="match-zone">
+        <div class="column">
+            <h3>🇬🇧 ENGLISH</h3>
+            <div id="englishList" class="verb-list"></div>
+        </div>
+        <div class="column">
+            <h3>🇳🇵 NEPALI</h3>
+            <div id="nepaliList" class="verb-list"></div>
+        </div>
+        <div id="lineLayer" class="line-overlay"></div>
+    </div>
+    <div class="footer-note">
+        💡 Click any word → speaks aloud. Match English ↔ Nepali. ✅ Check mark + green connecting line = correct!
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // COMPLETE VERBS (all 300+ from original list)
+    // --------------------------------------------------------------
+    const allEnglishVerbs = [
+        "run","jump","walk","eat","drink","sleep","wake","talk","listen","look","see","watch","touch","feel","hold","carry","lift","push","pull","throw","catch","kick","hit","clap","wave","sit","stand","lie","kneel","crawl","climb","slide","swing","dance","sing","laugh","cry","shout","whisper","read","write","draw","paint","cook","bake","fry","boil","chop","mix","pour","wash","clean","wipe","sweep","mop","dust","vacuum","iron","fold","hang","dress","undress","brush","comb","shave","shower","bathe","dry","apply","tie","untie","zip","button","buckle","pack","unpack","load","unload","open","close","lock","unlock","enter","exit","arrive","leave","travel","drive","ride","fly","sail","row","pedal","swim","dive","float","sink","slip","trip","fall","rise","turn","spin","twist","bend","stretch","shake","nod","blink","wink","smile","frown","yawn","sneeze","cough","hiccup","burp","chew","swallow","lick","bite","sip","slurp","nibble","devour","feed","water","plant","dig","rake","mow","cut","trim","shave","carve","slice","dice","grate","peel","squeeze","crush","mash","stir","whisk","knead","roll","spread","sprinkle","drizzle","dip","soak","rinse","scrub","polish","wax","spray","wipe","blot","dab","pat","tap","knock","ring","buzz","click","drag","drop","flip","toss","bounce","roll","spin","slide","glide","hop","skip","march","stomp","tiptoe","creep","sneak","dash","sprint","jog","race","chase","follow","lead","guide","direct","point","show","hide","seek","find","lose","search","discover","collect","gather","pick","choose","select","decide","plan","build","construct","assemble","repair","fix","break","smash","tear","rip","cut","poke","prod","tickle","hug","kiss","pat","stroke","squeeze","pinch","punch","kick","stomp","jump","leap","dive","duck","dodge","block","guard","protect","save","help","assist","serve","give","take","grab","snatch","steal","borrow","lend","share","split","divide","combine","mix","blend","match","sort","arrange","organize","store","keep","save","waste","spend","earn","buy","sell","trade","exchange","return","replace","move","shift","transfer","send","receive","accept","reject","agree","disagree","argue","discuss","explain","describe","repeat","practice","learn","teach","study","memorize","recall","forget","think","wonder","imagine","dream","hope","wish","try","attempt","succeed","fail","stop"
+    ];
+
+    // --------------------------------------------------------------
+    // NEPALI TRANSLATIONS (complete dictionary for all verbs)
+    // --------------------------------------------------------------
+    const nepaliMap = {
+        "run":"दौडनु","jump":"हाम फाल्नु","walk":"हिड्नु","eat":"खानु","drink":"पिउनु","sleep":"सुत्नु","wake":"उठ्नु","talk":"कुरा गर्नु","listen":"सुन्नु","look":"हेर्नु","see":"देख्नु","watch":"नियाल्नु","touch":"छुनु","feel":"महसुस गर्नु","hold":"समाउनु","carry":"बोक्नु","lift":"उचाल्नु","push":"धकेल्नु","pull":"तान्नु","throw":"फाल्नु","catch":"समात्नु","kick":"लात्ता हान्नु","hit":"हिर्काउनु","clap":"ताली बजाउनु","wave":"हात हल्लाउनु","sit":"बस्नु","stand":"उभिनु","lie":"पल्टिनु","kneel":"घुँडा टेक्नु","crawl":"घिच्रिनु","climb":"चढ्नु","slide":"चिप्लिनु","swing":"झुल्नु","dance":"नाच्नु","sing":"गाउनु","laugh":"हाँस्नु","cry":"रुनु","shout":"चिच्याउनु","whisper":"फुसफुसाउनु","read":"पढ्नु","write":"लेख्नु","draw":"कोर्नु","paint":"रङ पोत्नु","cook":"पकाउनु","bake":"बेक गर्नु","fry":"तार्नु","boil":"उमाल्नु","chop":"काट्नु","mix":"मिसाउनु","pour":"खन्याउनु","wash":"धुनु","clean":"सफा गर्नु","wipe":"पुच्छ्नु","sweep":"बढार्नु","mop":"पोछ्नु","dust":"धुलो झार्नु","vacuum":"भ्याकुम गर्नु","iron":"इस्त्री गर्नु","fold":"पट्याउनु","hang":"झुन्ड्याउनु","dress":"लुगा लगाउनु","undress":"लुगा फुकाल्नु","brush":"ब्रस गर्नु","comb":"कपाल कोर्नु","shave":"दाढी बनाउनु","shower":"नुहाउनु","bathe":"नुहाउनु","dry":"सुकाउनु","apply":"लगाउनु","tie":"बाँध्नु","untie":"फुकाउनु","zip":"जिप लगाउनु","button":"बटन लगाउनु","buckle":"बकल लगाउनु","pack":"प्याक गर्नु","unpack":"खोल्नु","load":"लोड गर्नु","unload":"उतार्नु","open":"खोल्नु","close":"बन्द गर्नु","lock":"ताल्चा लगाउनु","unlock":"ताल्चा खोल्नु","enter":"पस्नु","exit":"बाहिर निस्कनु","arrive":"आइपुग्नु","leave":"छोड्नु","travel":"यात्रा गर्नु","drive":"चलाउनु","ride":"सवारी गर्नु","fly":"उड्नु","sail":"डुङ्गा चलाउनु","row":"बिउँडा हान्नु","pedal":"पेडल हान्नु","swim":"पौडिनु","dive":"डुबुल्की मार्नु","float":"तैरिनु","sink":"डुब्नु","slip":"चिप्लिनु","trip":"ठोक्किनु","fall":"खस्नु","rise":"उठ्नु","turn":"घुम्नु","spin":"घुमाउनु","twist":"बटार्नु","bend":"निहुरिनु","stretch":"तन्काउनु","shake":"हल्लाउनु","nod":"टाउको हल्लाउनु","blink":"झिम्क्याउनु","wink":"आँखा झपकाउनु","smile":"मुस्कुराउनु","frown":"निधार खुम्च्याउनु","yawn":"हाइ तान्नु","sneeze":"छिँकी हान्नु","cough":"खोक्नु","hiccup":"हिक्की आउनु","burp":"डकार निकाल्नु","chew":"चपाउनु","swallow":"निल्नु","lick":"चाट्नु","bite":"टोक्नु","sip":"सुरुची लिनु","slurp":"चुस्की लिनु","nibble":"टुक्रा पार्नु","devour":"हतारहतार खानु","feed":"खुवाउनु","water":"पानी हाल्नु","plant":"रोप्नु","dig":"खन्नु","rake":"कोदालो हान्नु","mow":"काट्नु","cut":"काट्नु","trim":"ट्रिम गर्नु","carve":"नक्काशी गर्नु","slice":"फाली पार्नु","dice":"टुक्रा पार्नु","grate":"पिस्नु","peel":"बोक्रा हटाउनु","squeeze":"निचोर्नु","crush":"किच्नु","mash":"मिसाउनु","stir":"चलाउनु","whisk":"फेट्नु","knead":"मुछ्नु","roll":"बेल्नु","spread":"फैलाउनु","sprinkle":"छर्कनु","drizzle":"टप्काउनु","dip":"डुबाउनु","soak":"भिजाउनु","rinse":"कुल्ला गर्नु","scrub":"स्क्रब गर्नु","polish":"पालिस गर्नु","wax":"मैन लगाउनु","spray":"स्प्रे गर्नु","blot":"सोस्नु","dab":"बिस्तारै छुनु","pat":"थपथपाउनु","tap":"ठोक्नु","knock":"ढकढकाउनु","ring":"बजाउनु","buzz":"गुनगुनाउनु","click":"क्लिक गर्नु","drag":"तान्नु","drop":"खसाल्नु","flip":"पल्टाउनु","toss":"उफार्नु","bounce":"उफ्रिनु","roll":"लड्कनु","glide":"सर्पनु","hop":"फड्को मार्नु","skip":"उफ्रिँदै हिड्नु","march":"मार्च गर्नु","stomp":"धसमुस्स हान्नु","tiptoe":"पाइला चालेर हिड्नु","creep":"सर्पनु","sneak":"चोर बाटो जानु","dash":"दगुर्नु","sprint":"पूर्ण गतिमा दगुर्नु","jog":"जगिङ गर्नु","race":"दौड प्रतिस्पर्धा गर्नु","chase":"पछ्याउनु","follow":"पछि लाग्नु","lead":"नेतृत्व गर्नु","guide":"मार्गदर्शन गर्नु","direct":"निर्देशन दिनु","point":"औंलाले देखाउनु","show":"देखाउनु","hide":"लुकाउनु","seek":"खोज्नु","find":"पत्ता लगाउनु","lose":"हराउनु","search":"खोजी गर्नु","discover":"पत्ता लगाउनु","collect":"सङ्कलन गर्नु","gather":"जम्मा गर्नु","pick":"टिप्नु","choose":"छनोट गर्नु","select":"चयन गर्नु","decide":"निर्णय गर्नु","plan":"योजना बनाउनु","build":"निर्माण गर्नु","construct":"सिर्जना गर्नु","assemble":"जम्मा गर्नु","repair":"मर्मत गर्नु","fix":"ठीक गर्नु","break":"भाँच्नु","smash":"चकनाचुर गर्नु","tear":"च्यात्नु","rip":"च्यात्नु","poke":"घोच्नु","prod":"छेड्नु","tickle":"गुदगुदी गर्नु","hug":"अँगालो हाल्नु","kiss":"चुम्बन गर्नु","stroke":"सुम्सुम्याउनु","pinch":"चिम्लनु","punch":"मुक्का हान्नु","leap":"फड्को मार्नु","duck":"टाउको तल पार्नु","dodge":"बच्नु","block":"रोक्नु","guard":"रक्षा गर्नु","protect":"संरक्षण गर्नु","save":"बचाउनु","help":"मद्दत गर्नु","assist":"सहायता गर्नु","serve":"सेवा गर्नु","give":"दिनु","take":"लिनु","grab":"समात्नु","snatch":"खोस्नु","steal":"चोर्नु","borrow":"सापटी लिनु","lend":"सापटी दिनु","share":"बाँड्नु","split":"विभाजन गर्नु","divide":"विभाजन गर्नु","combine":"मिलाउनु","blend":"मिस्रनु","match":"मिलान गर्नु","sort":"क्रमबद्ध गर्नु","arrange":"व्यवस्थित गर्नु","organize":"संगठित गर्नु","store":"भण्डारण गर्नु","keep":"राख्नु","waste":"बर्बाद गर्नु","spend":"खर्च गर्नु","earn":"कमाउनु","buy":"किन्नु","sell":"बेच्नु","trade":"व्यापार गर्नु","exchange":"साट्नु","return":"फर्काउनु","replace":"प्रतिस्थापन गर्नु","move":"सर्नु","shift":"स्थानान्तरण गर्नु","transfer":"ट्रान्सफर गर्नु","send":"पठाउनु","receive":"प्राप्त गर्नु","accept":"स्वीकार गर्नु","reject":"अस्वीकार गर्नु","agree":"सहमत हुनु","disagree":"असहमत हुनु","argue":"बहस गर्नु","discuss":"छलफल गर्नु","explain":"व्याख्या गर्नु","describe":"वर्णन गर्नु","repeat":"दोहोर्याउनु","practice":"अभ्यास गर्नु","learn":"सिक्नु","teach":"सिकाउनु","study":"अध्ययन गर्नु","memorize":"कण्ठ गर्नु","recall":"सम्झनु","forget":"बिर्सनु","think":"सोच्नु","wonder":"आश्चर्य मान्नु","imagine":"कल्पना गर्नु","dream":"सपना देख्नु","hope":"आशा गर्नु","wish":"इच्छा गर्नु","try":"प्रयास गर्नु","attempt":"प्रयास गर्नु","succeed":"सफल हुनु","fail":"असफल हुनु","stop":"रोक्नु"
+    };
+
+    // fallback for any missing
+    for (let v of allEnglishVerbs) {
+        if (!nepaliMap[v]) nepaliMap[v] = v + " (गर्नु)";
+    }
+
+    const VERBS_PER_PAGE = 5;
+    const verbPages = [];
+    for (let i = 0; i < allEnglishVerbs.length; i += VERBS_PER_PAGE) {
+        const slice = allEnglishVerbs.slice(i, i + VERBS_PER_PAGE);
+        const pageData = slice.map(eng => ({ eng, nep: nepaliMap[eng] }));
+        verbPages.push(pageData);
+    }
+
+    // -------------------- GAME STATE --------------------
+    let currentPageIdx = 0;
+    let currentPageVerbs = null;
+    let shuffledEnglish = [];    // { text, pairId }
+    let shuffledNepali = [];
+    let matchedPairs = [];       // { engEl, nepEl, pairId } for drawing lines
+    let selectedCard = null;
+    let totalInPage = 5;
+
+    const englishDiv = document.getElementById('englishList');
+    const nepaliDiv = document.getElementById('nepaliList');
+    const matchCountSpan = document.getElementById('matchCount');
+    const totalCountSpan = document.getElementById('totalCount');
+    const statusDiv = document.getElementById('statusMsg');
+    const lineLayer = document.getElementById('lineLayer');
+
+    // ---------- SPEECH ----------
+    function speakText(text, lang) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // ---------- SOUND EFFECTS ----------
+    let audioContext = null;
+    function getAudioContext() {
+        if (audioContext) return audioContext;
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch(e) { return null; }
+        return audioContext;
+    }
+    function playSoftBeep() {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        if (ctx.state === 'suspended') ctx.resume();
+        try {
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.value = 1000;
+            gain.gain.value = 0.12;
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+            osc.stop(now + 0.2);
+        } catch(e) {}
+    }
+    function playBuzz() {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        if (ctx.state === 'suspended') ctx.resume();
+        try {
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sawtooth';
+            osc.frequency.value = 490;
+            gain.gain.value = 0.35;
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, now + 0.35);
+            osc.stop(now + 0.35);
+        } catch(e) {}
+    }
+
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function buildShuffledColumns(verbsArr) {
+        const engItems = verbsArr.map((verb, idx) => ({ text: verb.eng, pairId: idx }));
+        const nepItems = verbsArr.map((verb, idx) => ({ text: verb.nep, pairId: idx }));
+        return {
+            engShuffled: shuffle([...engItems]),
+            nepShuffled: shuffle([...nepItems])
+        };
+    }
+
+    function clearLines() {
+        lineLayer.innerHTML = '';
+    }
+
+    function drawMatchLines() {
+        clearLines();
+        if (matchedPairs.length === 0) return;
+        const container = document.getElementById('matchArea');
+        const containerRect = container.getBoundingClientRect();
+        if (containerRect.width === 0) return;
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("width", "100%");
+        svg.setAttribute("height", "100%");
+        svg.style.position = "absolute";
+        svg.style.top = "0";
+        svg.style.left = "0";
+        for (let pair of matchedPairs) {
+            const engRect = pair.engEl.getBoundingClientRect();
+            const nepRect = pair.nepEl.getBoundingClientRect();
+            const startX = engRect.right - containerRect.left - 5;
+            const startY = (engRect.top + engRect.bottom) / 2 - containerRect.top;
+            const endX = nepRect.left - containerRect.left + 5;
+            const endY = (nepRect.top + nepRect.bottom) / 2 - containerRect.top;
+            const line = document.createElementNS(svgNS, "line");
+            line.setAttribute("x1", startX);
+            line.setAttribute("y1", startY);
+            line.setAttribute("x2", endX);
+            line.setAttribute("y2", endY);
+            line.classList.add("match-line");
+            svg.appendChild(line);
+        }
+        lineLayer.appendChild(svg);
+    }
+
+    function clearSelection() {
+        if (selectedCard && selectedCard.element) {
+            selectedCard.element.classList.remove('selected');
+        }
+        selectedCard = null;
+    }
+
+    function updateScoreUI() {
+        matchCountSpan.innerText = matchedPairs.length;
+        if (matchedPairs.length === totalInPage) {
+            statusDiv.innerHTML = "🎉 PERFECT! All matched! Go to next page 🎉";
+            statusDiv.style.backgroundColor = "#d4f5d0";
+        } else {
+            statusDiv.style.backgroundColor = "#fff0d4";
+        }
+    }
+
+    function attemptMatch(newType, newElement, newPairId) {
+        if (!selectedCard) return false;
+        const { type: selType, element: selEl, pairId: selPair } = selectedCard;
+        if ((selType === 'eng' && newType === 'nep') || (selType === 'nep' && newType === 'eng')) {
+            if (selPair === newPairId) {
+                if (selEl.classList.contains('matched') || newElement.classList.contains('matched')) {
+                    statusDiv.innerHTML = "⛔ Already matched! Pick a new word.";
+                    clearSelection();
+                    return false;
+                }
+                selEl.classList.add('matched');
+                newElement.classList.add('matched');
+                matchedPairs.push({ engEl: selType === 'eng' ? selEl : newElement, nepEl: selType === 'nep' ? selEl : newElement, pairId: selPair });
+                updateScoreUI();
+                drawMatchLines();
+                clearSelection();
+                return true;
+            } else {
+                playBuzz();
+                [selEl, newElement].forEach(el => {
+                    el.classList.add('wrong-flash');
+                    setTimeout(() => el.classList.remove('wrong-flash'), 300);
+                });
+                statusDiv.innerHTML = "❌ Wrong match! Listen to buzzer, try again ❌";
+                clearSelection();
+                return false;
+            }
+        } else {
+            clearSelection();
+            if (!newElement.classList.contains('matched')) {
+                selectedCard = { type: newType, element: newElement, pairId: newPairId };
+                newElement.classList.add('selected');
+                statusDiv.innerHTML = `👉 Selected: ${newElement.innerText} → now pick from the opposite column.`;
+            }
+            return false;
+        }
+    }
+
+    function speakCard(card, cardType, wordText) {
+        if (cardType === 'eng') speakText(wordText, 'en-US');
+        else speakText(wordText, 'ne-NP');
+    }
+
+    function handleCardClick(e) {
+        const card = e.target.closest('.word-card');
+        if (!card) return;
+        if (card.classList.contains('matched')) {
+            statusDiv.innerHTML = "🔒 Already matched! Choose a different word.";
+            return;
+        }
+        const cardType = card.getAttribute('data-type');
+        const pairId = parseInt(card.getAttribute('data-pairid'));
+        const wordText = card.innerText.trim();
+        speakCard(card, cardType, wordText);
+        playSoftBeep();
+        if (isNaN(pairId)) return;
+        if (!selectedCard) {
+            clearSelection();
+            selectedCard = { type: cardType, element: card, pairId };
+            card.classList.add('selected');
+            statusDiv.innerHTML = `✨ Selected: ${wordText} → now match with opposite side ✨`;
+            return;
+        }
+        attemptMatch(cardType, card, pairId);
+    }
+
+    function renderCurrentPage() {
+        if (!currentPageVerbs) return;
+        clearSelection();
+        matchedPairs = [];
+        clearLines();
+        totalInPage = currentPageVerbs.length;
+        totalCountSpan.innerText = totalInPage;
+        updateScoreUI();
+
+        const { engShuffled, nepShuffled } = buildShuffledColumns(currentPageVerbs);
+        shuffledEnglish = engShuffled;
+        shuffledNepali = nepShuffled;
+
+        englishDiv.innerHTML = '';
+        shuffledEnglish.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card eng-card';
+            card.textContent = item.text;
+            card.setAttribute('data-type', 'eng');
+            card.setAttribute('data-pairid', item.pairId);
+            englishDiv.appendChild(card);
+        });
+
+        nepaliDiv.innerHTML = '';
+        shuffledNepali.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'word-card nep-card';
+            card.textContent = item.text;
+            card.setAttribute('data-type', 'nep');
+            card.setAttribute('data-pairid', item.pairId);
+            nepaliDiv.appendChild(card);
+        });
+
+        statusDiv.innerHTML = `📘 Page ${currentPageIdx+1} / ${verbPages.length} · Tap any word to hear it!`;
+        statusDiv.style.backgroundColor = "#fff0d4";
+    }
+
+    function loadPage(pageNumber) {
+        if (pageNumber < 0) pageNumber = 0;
+        if (pageNumber >= verbPages.length) pageNumber = verbPages.length - 1;
+        currentPageIdx = pageNumber;
+        currentPageVerbs = verbPages[currentPageIdx];
+        renderCurrentPage();
+    }
+
+    function resetCurrentPage() {
+        if (!currentPageVerbs) return;
+        renderCurrentPage();
+        statusDiv.innerHTML = "🔄 Page reset! Both columns shuffled. Keep matching!";
+    }
+
+    function nextPage() {
+        if (currentPageIdx + 1 < verbPages.length) loadPage(currentPageIdx + 1);
+        else statusDiv.innerHTML = "🎉 You finished all pages! Great job! 🎉";
+    }
+    function prevPage() {
+        if (currentPageIdx - 1 >= 0) loadPage(currentPageIdx - 1);
+        else statusDiv.innerHTML = "🌟 This is the first page! Enjoy learning! 🌟";
+    }
+
+    const matchZone = document.getElementById('matchArea');
+    matchZone.addEventListener('click', handleCardClick);
+    document.getElementById('prevPageBtn').addEventListener('click', prevPage);
+    document.getElementById('nextPageBtn').addEventListener('click', nextPage);
+    document.getElementById('resetBtn').addEventListener('click', resetCurrentPage);
+    window.addEventListener('resize', () => setTimeout(drawMatchLines, 30));
+    const resizeObserver = new ResizeObserver(() => drawMatchLines());
+    resizeObserver.observe(matchZone);
+
+    loadPage(0);
+</script>
+</body>
+</html>
